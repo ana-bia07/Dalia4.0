@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/users")
@@ -41,6 +42,13 @@ public class UsersController {
                 : ResponseEntity.notFound().build();
     }
 
+    @GetMapping
+    @Operation(summary = "Busca todos os serviços", description = "Busca todos os serviços")
+    public ResponseEntity<List<Users>> findAll(){
+        var listServices = usersServices.getAll();
+        return ResponseEntity.ok(listServices);
+    }
+
     @DeleteMapping("/{idUsers}")
     @Operation(summary = "Deleta um usuário pelo Id", description = "Rota para Deletar um usuário pelo Id")
     public ResponseEntity<Void> deleteById(@PathVariable String idUsers){
@@ -48,7 +56,8 @@ public class UsersController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{idUsers}")
+    @Operation(summary = "Atualiza um usuário pelo Id", description = "Rota para atualizar um usuário pelo Id")
     public ResponseEntity<Users> updateUser(@PathVariable String idUsers, @RequestBody UsersDTO usersDTO) {
         Optional<Users> optionalUser = usersRepository.findById(idUsers);
 
