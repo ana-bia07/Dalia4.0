@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
+    <title>Dália Cadastro</title>
+    <link rel="shortcut icon" type="imagex/png" href="img/dália_secundario.png">
+</head>
+
+<body>
+<div class="painel">
+    <div class="form-row">
+        <div class="cabecalho">
+            <a href="/LandingPage/LandingPage.html" class="voltar"><img src="img/Back.svg" alt="Voltar"></a>
+            <h1>Cadastro</h1>
+        </div>
+        <div class="nome_sobrenome">
+            <input type="name" class="form-control__nm" id="name" placeholder="Nome">
+            <input type="lastname" class="form-control__sm" id="lastname" placeholder="Sobrenome">
+        </div>
+        <div class="inputs">
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Email">
+            </div>
+            <div class="seguranca form-group">
+                <input type="password" class="form-control" id="password" placeholder="Crie uma senha">
+            </div>
+            <div class="seguranca form-group">
+                <input type="password" class="form-control" id="passconfirmation" placeholder="Confirme a senha">
+            </div>
+        </div>
+        <label class="container">Concordo com os <a href="#" class="termos__condicoes"> termos e condições </a>
+            <input type="checkbox" checked="checked">
+            <span class="checkmark"></span>
+        </label>
+        <section>
+            <button>Criar Conta</button>
+        </section>
+        <div class="line-parent">
+            <div class="frame-child">
+            </div>
+            <div class="ou-entre-com">Ou entre com</div>
+            <div class="frame-child">
+            </div>
+        </div>
+        <div class="tags__redes">
+            <img class="tags" alt="" src="img/Facebook.svg">
+            <img class="tags" alt="" src="img/Google.svg">
+            <img class="tags" alt="" src="img/Instagram.svg">
+        </div>
+
+
+    </div>
+</div>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+<script src="CadastroLink.js"></script>
+</body>
+
+</html>
