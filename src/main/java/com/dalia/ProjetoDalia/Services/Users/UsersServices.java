@@ -3,7 +3,6 @@ package com.dalia.ProjetoDalia.Services.Users;
 import com.dalia.ProjetoDalia.DTOS.Users.UsersDTO;
 import com.dalia.ProjetoDalia.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Repository.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 

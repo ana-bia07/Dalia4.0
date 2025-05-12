@@ -1,17 +1,20 @@
 package com.dalia.ProjetoDalia.Services.Users;
 
 import com.dalia.ProjetoDalia.DTOS.Users.PregnancyMonitoringDTO;
-import com.dalia.ProjetoDalia.Entity.PregnancyMonitoring;
-import com.dalia.ProjetoDalia.Entity.Users;
+import com.dalia.ProjetoDalia.Entity.Users.PregnancyMonitoring;
+import com.dalia.ProjetoDalia.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PregnancyMonitoringService {
+
     private final UsersRepository usersRepository;
 
     public String createPregnancyMonitoring(String idUsers, PregnancyMonitoringDTO dto) {
@@ -19,7 +22,12 @@ public class PregnancyMonitoringService {
         if (userOpt.isEmpty()) return "Usuário não encontrado";
 
         Users user = userOpt.get();
-        user.setPregnancyMonitoring(toEntity(dto));
+
+        if (user.getPregnancyMonitorings() == null) {
+            user.setPregnancyMonitorings(new ArrayList<>());
+        }
+
+        user.getPregnancyMonitorings().add(toEntity(dto));
         usersRepository.save(user);
 
         return "Gravidez registrada com sucesso";
@@ -27,16 +35,27 @@ public class PregnancyMonitoringService {
 
     public Optional<PregnancyMonitoringDTO> getPregnancyByidUsers(String idUsers) {
         return usersRepository.findById(idUsers)
-                .map(Users::getPregnancyMonitoring)
-                .map(this::toDTO);
+                .map(Users::getPregnancyMonitorings)
+                .filter(pregnancyMonitorings -> !pregnancyMonitorings.isEmpty())
+                .map(pregnancyMonitorings -> pregnancyMonitorings.stream()
+                        .map(this::toDTO)
+                        .collect(Collectors.toList()))
+                .map(dtoList -> dtoList.get(0));
     }
+
 
     public Optional<PregnancyMonitoringDTO> updatePregnancy(String idUsers, PregnancyMonitoringDTO dto) {
         Optional<Users> userOpt = usersRepository.findById(idUsers);
         if (userOpt.isEmpty()) return Optional.empty();
 
         Users user = userOpt.get();
-        user.setPregnancyMonitoring(toEntity(dto));
+
+        if (user.getPregnancyMonitorings() == null) {
+            user.setPregnancyMonitorings(new ArrayList<>());
+        }
+
+        user.getPregnancyMonitorings().clear();
+        user.getPregnancyMonitorings().add(toEntity(dto));
         usersRepository.save(user);
         return Optional.of(dto);
     }
@@ -44,7 +63,7 @@ public class PregnancyMonitoringService {
     public void deletePregnancy(String idUsers) {
         Optional<Users> userOpt = usersRepository.findById(idUsers);
         userOpt.ifPresent(user -> {
-            user.setPregnancyMonitoring(null);
+            user.setPregnancyMonitorings(null);
             usersRepository.save(user);
         });
     }

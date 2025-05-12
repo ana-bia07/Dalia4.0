@@ -6,6 +6,8 @@ import com.dalia.ProjetoDalia.Repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,11 +16,18 @@ public class CommentsService {
 
     private final PostsRepository postsRepository;
 
-    public Optional<Posts> addComment(String idPosts, Comments comment) {
-        return postsRepository.findById(idPosts)
-                .map(post -> {
-                    post.getComments().add(comment);
-                    return postsRepository.save(post);
-                });
+    public void addComment(String postId, Comments comment) {
+        Optional<Posts> postOpt = postsRepository.findById(postId);
+        if (postOpt.isPresent()) {
+            Posts post = postOpt.get();
+            post.getComments().add(comment);
+            postsRepository.save(post);
+        }
+    }
+
+    public List<Comments> getCommentsByPostId(String postId) {
+        return postsRepository.findById(postId)
+                .map(Posts::getComments)
+                .orElse(Collections.emptyList());
     }
 }

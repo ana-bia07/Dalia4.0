@@ -14,11 +14,11 @@ import java.util.List;
 public class PregnancyMonitoring {
 
     private boolean isPregnant;
-    @Field(name = "lastMentruationDay")
-    private Instant lastMentruationDay;
+    @Field(name = "lastMenstruationDay")
+    private Instant lastMenstruationDay;
     private int gestationWeeks;
     @Field(name = "expectedBirthDate")
     private Instant expectedBirthDate;
     private List<String> symptoms;
-    private List<Consultations> consultations;
+    private List<String> consultations;
 }

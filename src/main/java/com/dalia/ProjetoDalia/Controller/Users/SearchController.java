@@ -1,7 +1,7 @@
 package com.dalia.ProjetoDalia.Controller.Users;
 
 import com.dalia.ProjetoDalia.DTOS.Users.SearchDTO;
-import com.dalia.ProjetoDalia.Entity.Search;
+import com.dalia.ProjetoDalia.Entity.Users.Search;
 import com.dalia.ProjetoDalia.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Users.SearchService;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;

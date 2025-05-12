@@ -1,8 +1,7 @@
 package com.dalia.ProjetoDalia.DTOS.Users;
 
-import com.dalia.ProjetoDalia.Entity.Search;
+import com.dalia.ProjetoDalia.Entity.Users.Search;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public record SearchDTO(

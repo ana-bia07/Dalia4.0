@@ -1,6 +1,6 @@
 package com.dalia.ProjetoDalia.DTOS.Users;
 
-import com.dalia.ProjetoDalia.Entity.PregnancyMonitoring;
+import com.dalia.ProjetoDalia.Entity.Users.PregnancyMonitoring;
 
 import java.time.Instant;
 import java.util.List;

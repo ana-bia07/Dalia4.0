@@ -1,12 +1,12 @@
 package com.dalia.ProjetoDalia.Entity.Users;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
+@Document(collation = "search")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +17,6 @@ public class Search {
     private boolean useContraceptive;
     private String contraceptiveType;
     @Field(name = "lastMenstruationDay")
-    private Instant lastMenstruationDay;
+    private LocalDate lastMenstruationDay;
     private int cycleDuration;
 }
