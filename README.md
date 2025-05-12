@@ -43,6 +43,7 @@ Este projeto está alinhado com os seguintes Objetivos de Desenvolvimento Susten
 - [@Guilherme](https://github.com/GuilhermeSouza198)
 - [@Natali](https://github.com/nouveauromance)
 - [@Rayane](https://github.com/RayaneBarrosM)
+- [@Felipe](https://github.com/FelipeLan)
 
 --- 
 
