@@ -33,7 +33,9 @@ html{
     gap: 20px;
 }
 
-.form-control__nm, .form-control__sm, .form-control {
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -41,12 +43,12 @@ html{
     border: 1.5px solid black;
 }
 
-.form-control__nm {
+#name {
     width: 220px;
     flex: 1;
 }
 
-.form-control__sm {
+#surname {
     flex: 1;
 }
 
@@ -99,7 +101,8 @@ button:hover {
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .nome_sobrenome {
+    #name,
+    #surname{
         flex-direction: column;
     }
 }
@@ -153,18 +156,20 @@ button:hover {
     padding-left: 1ch;
 }
 
-/*checkbox*/
+
+
 .container {
     display: flex;
-    align-items: center; /* Alinha o checkbox e o texto verticalmente */
+    align-items: center;
     position: relative;
     padding-left: 35px;
     cursor: pointer;
-    font-size: 18px; /* Ajusta o tamanho da fonte para combinar */
-    line-height: 20px; /* Certifica-se de que o texto e o checkbox estão bem alinhados */
+    font-size: 18px;
+    line-height: 20px;
     user-select: none;
 }
 
+/* Esconde o checkbox padrão */
 .container input {
     position: absolute;
     opacity: 0;
@@ -172,6 +177,8 @@ button:hover {
     height: 0;
     width: 0;
 }
+
+/* Estilo do checkbox customizado */
 .checkmark {
     position: absolute;
     top: 0;
@@ -182,24 +189,29 @@ button:hover {
     border-radius: 10%;
 }
 
+/* Hover no container altera o background da checkmark */
 .container:hover input ~ .checkmark {
     background-color: #ef5b99;
 }
 
+/* Quando marcado, muda a cor da checkmark */
 .container input:checked ~ .checkmark {
     background-color: #ef5b99;
 }
 
+/* Cria o símbolo de check */
 .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
+/* Mostra o símbolo de check quando marcado */
 .container input:checked ~ .checkmark:after {
     display: block;
 }
 
+/* Estilo do símbolo de check */
 .container .checkmark:after {
     left: 8px;
     top: 4px;

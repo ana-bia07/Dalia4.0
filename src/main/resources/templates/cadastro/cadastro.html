@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/cadastro/cadastro.css" rel="stylesheet">
+    <title>Dália Cadastro</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/cadastro/img/dália_secundario.png}">
+</head>
+
+<body>
+<div class="painel">
+    <div class="form-row">
+        <div class="cabecalho">
+            <a href="/LandingPage/LandingPage.html" class="voltar">
+                <img src="/cadastro/img/Back.svg" alt="Voltar">
+            </a>
+            <h1>Cadastro</h1>
+        </div>
+        <form action="http://localhost:8080/criaUsuario" method="post">
+            <div class="nome_sobrenome">
+            <input type="text" placeholder="Nome" id="name" name="name" required>
+            <input type="text" placeholder="Sobrenome" id="lastname" name="surname" required>
+            </div>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="passconfirmation">Confirme a senha:</label>
+            <input type="password" id="passconfirmation" name="passconfirmation" required>
+
+            <label class="container">
+                Aceito os termos e condições
+                <input type="checkbox" id="termos" required>
+                <span class="checkmark"></span>
+            </label>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <div class="line-parent">
+            <div class="frame-child"></div>
+            <div class="ou-entre-com">Ou entre com</div>
+            <div class="frame-child"></div>
+        </div>
+        <div class="tags__redes">
+            <img class="tags" src="/cadastro/img/Facebook.svg" alt="Facebook">
+            <img class="tags" src="/cadastro/img/Google.svg" alt="Google">
+            <img class="tags" src="/cadastro/img/Instagram.svg" alt="Instagram">
+        </div>
+    </div>
+</div>
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+
+<script th:src="@{https://vlibras.gov.br/app/vlibras-plugin.js}"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+</body>
+</html>
