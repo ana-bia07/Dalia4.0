@@ -22,12 +22,9 @@ public class PregnancyMonitoringService {
         if (userOpt.isEmpty()) return "Usuário não encontrado";
 
         Users user = userOpt.get();
+        PregnancyMonitoring pregnancyMonitoring = dto.toEntity();
 
-        if (user.getPregnancyMonitorings() == null) {
-            user.setPregnancyMonitorings(new ArrayList<>());
-        }
-
-        user.getPregnancyMonitorings().add(toEntity(dto));
+        user.setPregnancyMonitoring(pregnancyMonitoring);
         usersRepository.save(user);
 
         return "Gravidez registrada com sucesso";
@@ -35,12 +32,14 @@ public class PregnancyMonitoringService {
 
     public Optional<PregnancyMonitoringDTO> getPregnancyByidUsers(String idUsers) {
         return usersRepository.findById(idUsers)
-                .map(Users::getPregnancyMonitorings)
-                .filter(pregnancyMonitorings -> !pregnancyMonitorings.isEmpty())
-                .map(pregnancyMonitorings -> pregnancyMonitorings.stream()
-                        .map(this::toDTO)
-                        .collect(Collectors.toList()))
-                .map(dtoList -> dtoList.get(0));
+                .map(Users::getPregnancyMonitoring)
+                .map(pregnancyMonitoring -> new PregnancyMonitoringDTO(
+                        pregnancyMonitoring.isPregnant(),
+                        pregnancyMonitoring.getDayPregnancy(),
+                        pregnancyMonitoring.getGestationWeeks(),
+                        pregnancyMonitoring.getExpectedBirthDate(),
+                        pregnancyMonitoring.getConsultations()
+                ));
     }
 
 
@@ -50,20 +49,16 @@ public class PregnancyMonitoringService {
 
         Users user = userOpt.get();
 
-        if (user.getPregnancyMonitorings() == null) {
-            user.setPregnancyMonitorings(new ArrayList<>());
-        }
-
-        user.getPregnancyMonitorings().clear();
-        user.getPregnancyMonitorings().add(toEntity(dto));
+        user.setPregnancyMonitoring(dto.toEntity());
         usersRepository.save(user);
+
         return Optional.of(dto);
     }
 
     public void deletePregnancy(String idUsers) {
         Optional<Users> userOpt = usersRepository.findById(idUsers);
         userOpt.ifPresent(user -> {
-            user.setPregnancyMonitorings(null);
+            user.setPregnancyMonitoring(null);
             usersRepository.save(user);
         });
     }
@@ -71,10 +66,9 @@ public class PregnancyMonitoringService {
     private PregnancyMonitoring toEntity(PregnancyMonitoringDTO dto) {
         return new PregnancyMonitoring(
                 dto.isPregnant(),
-                dto.lastMenstruationDay(),
+                dto.dayPregnancy(),
                 dto.gestationWeeks(),
                 dto.expectedBirthDate(),
-                dto.symptoms(),
                 dto.consultations()
         );
     }
@@ -82,10 +76,9 @@ public class PregnancyMonitoringService {
     private PregnancyMonitoringDTO toDTO(PregnancyMonitoring entity) {
         return new PregnancyMonitoringDTO(
                 entity.isPregnant(),
-                entity.getLastMenstruationDay(),
+                entity.getDayPregnancy(),
                 entity.getGestationWeeks(),
                 entity.getExpectedBirthDate(),
-                entity.getSymptoms(),
                 entity.getConsultations()
         );
     }

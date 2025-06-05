@@ -25,6 +25,6 @@ public class Users {
     private String password;
     @Field(name = "birthDate")
     private Instant birthDate;
-    private List<Search> search;
-    private List<PregnancyMonitoring> pregnancyMonitorings;
+    private Search search;
+    private PregnancyMonitoring pregnancyMonitoring;
 }

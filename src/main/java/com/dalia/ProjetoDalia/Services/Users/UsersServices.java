@@ -51,7 +51,7 @@ public class UsersServices {
         if (StringUtils.hasText(usersDTO.password())) existingUser.setPassword(usersDTO.password());
         if (usersDTO.birthdate() != null) existingUser.setBirthDate(usersDTO.birthdate());
         if (usersDTO.search() != null) existingUser.setSearch(usersDTO.search());
-        if (usersDTO.pregnancyMonitorings() != null) existingUser.setPregnancyMonitorings(usersDTO.pregnancyMonitorings());
+        if (usersDTO.pregnancyMonitoring() != null) existingUser.setPregnancyMonitoring(usersDTO.pregnancyMonitoring());
 
         usersRepository.save(existingUser);
         return Optional.of(existingUser);

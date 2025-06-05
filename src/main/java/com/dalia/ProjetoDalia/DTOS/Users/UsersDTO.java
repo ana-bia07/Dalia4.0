@@ -13,8 +13,8 @@ public record UsersDTO(
         String email,
         String password,
         Instant birthdate,
-        List<Search> search,
-        List<PregnancyMonitoring> pregnancyMonitorings
+        Search search,
+        PregnancyMonitoring pregnancyMonitoring
 ) {
     public UsersDTO(Users users){
         this(
@@ -24,7 +24,7 @@ public record UsersDTO(
                 users.getPassword(),
                 users.getBirthDate(),
                 users.getSearch(),
-                users.getPregnancyMonitorings()
+                users.getPregnancyMonitoring()
         );
     }
 
@@ -37,7 +37,7 @@ public record UsersDTO(
                 password,
                 birthdate,
                 search,
-                pregnancyMonitorings
+                pregnancyMonitoring
         );
     }
 

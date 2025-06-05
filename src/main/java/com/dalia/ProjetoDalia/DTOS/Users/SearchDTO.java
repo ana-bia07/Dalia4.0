@@ -19,7 +19,7 @@ public record SearchDTO(
                 useContraceptive,
                 contraceptiveType,
                 lastMenstruationDay,
-                cycleDuration
-        );
+                toEntity().getMenstruationDuration(),
+                cycleDuration);
     }
 }

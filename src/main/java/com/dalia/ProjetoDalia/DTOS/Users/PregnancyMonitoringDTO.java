@@ -6,20 +6,18 @@ import java.time.Instant;
 import java.util.List;
 
 public record PregnancyMonitoringDTO(
-    boolean isPregnant,
-    Instant lastMenstruationDay,
-    int gestationWeeks,
-    Instant expectedBirthDate,
-    List<String> symptoms,
-    List<String> consultations
+        boolean isPregnant,
+        Instant dayPregnancy,
+        int gestationWeeks,
+        Instant expectedBirthDate,
+        List<String> consultations
 ) {
     public PregnancyMonitoring toEntity() {
         return new PregnancyMonitoring(
                 isPregnant,
-                lastMenstruationDay,
+                dayPregnancy,
                 gestationWeeks,
                 expectedBirthDate,
-                symptoms,
                 consultations);
     }
 }

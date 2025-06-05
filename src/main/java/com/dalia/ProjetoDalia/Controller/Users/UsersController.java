@@ -1,20 +1,21 @@
 package com.dalia.ProjetoDalia.Controller.Users;
 
 import com.dalia.ProjetoDalia.DTOS.Users.UsersDTO;
+import com.dalia.ProjetoDalia.Entity.Users.PregnancyMonitoring;
 import com.dalia.ProjetoDalia.Entity.Users.Search;
 import com.dalia.ProjetoDalia.Entity.Users.Users;
-import com.dalia.ProjetoDalia.Repository.SearchRepository;
 import com.dalia.ProjetoDalia.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.SessionTrackingMode;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Tag(name = "Usuários")
@@ -23,12 +24,10 @@ public class UsersController {
 
     private final UsersServices usersServices;
     private final UsersRepository usersRepository;
-    private final SearchRepository searchRepository;
 
-    public UsersController(UsersServices usersServices, UsersRepository usersRepository, SearchRepository searchRepository) {
+    public UsersController(UsersServices usersServices, UsersRepository usersRepository) {
         this.usersServices = usersServices;
         this.usersRepository = usersRepository;
-        this.searchRepository = searchRepository;
     }
 
     @GetMapping("/")
@@ -50,7 +49,7 @@ public class UsersController {
 
     @GetMapping("/cadastro")
     public String cadastro() {
-        return "cadastro/cadastro";
+        return "cadastro";
     }
 
 
@@ -58,7 +57,8 @@ public class UsersController {
     @Operation(summary = "Cria um usuário", description = "Rota para criar um usuário via formulário HTML")
     public String createUserForm(@RequestParam String name, @RequestParam String surname,
                                  @RequestParam String email, @RequestParam String password,
-                                 @RequestParam(required = false) String passconfirmation, Model model) {
+                                 @RequestParam(required = false) String passconfirmation, Model model,
+                                 HttpSession session) {
 
         if (!password.equals(passconfirmation)) {
             model.addAttribute("error", "As senhas não coincidem.");
@@ -70,48 +70,73 @@ public class UsersController {
         user.setSurname(surname);
         user.setEmail(email);
         user.setPassword(password);
-
-        // Defina valores default para os campos opcionais
         user.setBirthDate(null);
-        user.setSearch(Collections.emptyList());
-        user.setPregnancyMonitorings(Collections.emptyList());
+        user.setSearch(new Search());
+        user.setPregnancyMonitoring(new PregnancyMonitoring());
 
         usersRepository.save(user);
 
-        // Redireciona para a página de login após o cadastro bem-sucedido
+        session.setAttribute("idUser", user.getId());
         return "redirect:/search"; // Ajuste a URL de redirecionamento
     }
 
     @GetMapping("/login")
     public String MostraLogin(){
-        return "Login/Login";
+        return "Login";
     }
 
     @PostMapping("/RealizaLogin")
-    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession Session) {
         Optional<Users> optionalUser = usersRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
             if (user.getPassword().equals(password)) {
-                model.addAttribute("user", user);
-                return "redirect:/Home/index.html";  // Página inicial após login
+                Session.setAttribute("idUser", user.getId());                model.addAttribute("user", user);
+                return "redirect:/calendar";  // Página inicial após login
             }
         }
         model.addAttribute("error", "E-mail ou senha inválidos!");
-        return "Login/Login";  // Retorna para a página de login
+        return "Login";  // Retorna para a página de login
     }
 
     @GetMapping("/search")
-    public String mostrarFormulario(Model model) {
+    public String mostrarFormulario(Model model,HttpSession session) {
+        String idUser = (String) session.getAttribute("idUser");
+
+        if(idUser == null) {
+            return "redirect:/cadastro";
+        }
+
+        model.addAttribute("idUser", idUser);
         model.addAttribute("search", new Search());
         return "perguntas"; // Nome do arquivo Thymeleaf: resources/templates/pesquisa.html
     }
 
     @PostMapping("/salvar-respostas")
-    public String processarFormulario(@ModelAttribute("search") Search search) {
-        searchRepository.save(search);
-        return "redirect:/Home/home.html"; // Redireciona para a home após salvar
+    public String processarFormulario(@ModelAttribute("search") Search search, HttpSession session) {
+        String idUser = (String) session.getAttribute("idUser");
+        if (idUser == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Users> userOpt = usersRepository.findById(idUser);
+        if (userOpt.isPresent()) {
+            Users existingUser = userOpt.get();
+            UsersDTO dto = new UsersDTO(
+                    existingUser.getName(),
+                    existingUser.getSurname(),
+                    existingUser.getEmail(),
+                    existingUser.getPassword(),
+                    existingUser.getBirthDate(),
+                    search,
+                    existingUser.getPregnancyMonitoring()
+            );
+            usersServices.updateUser(idUser, dto);
+            session.setAttribute("search", search); // ← Adicione isto aqui
+        }
+        return "redirect:/calendar"; // ← Melhor redirecionar diretamente pro controller correto
     }
+
 
     @GetMapping("/{idUsers}")
     @Operation(summary = "Busca um usuário pelo Id", description = "Rota para buscar um usuário pelo Id")
@@ -152,6 +177,6 @@ public class UsersController {
         if (StringUtils.hasText(usersDTO.password())) existingUser.setPassword(usersDTO.password());
         if (usersDTO.birthdate() != null) existingUser.setBirthDate(usersDTO.birthdate());
         if (usersDTO.search() != null) existingUser.setSearch(usersDTO.search());
-        if (usersDTO.pregnancyMonitorings() != null) existingUser.setPregnancyMonitorings(usersDTO.pregnancyMonitorings());
+        if (usersDTO.pregnancyMonitoring() != null) existingUser.setPregnancyMonitoring(usersDTO.pregnancyMonitoring());
     }
 }

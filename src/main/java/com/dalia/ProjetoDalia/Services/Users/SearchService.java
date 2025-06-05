@@ -24,10 +24,7 @@ public class SearchService {
         Users user = userOpt.get();
         Search search = searchData.toEntity();
 
-        if (user.getSearch() == null) {
-            user.setSearch(new ArrayList<>());
-        }
-        user.getSearch().add(search);
+        user.setSearch(search);
         usersRepository.save(user);
 
         return "Search cadastrada com sucesso para o usuário " + idUsers;
@@ -38,11 +35,9 @@ public class SearchService {
         if (userOpt.isEmpty()) return Optional.empty();
 
         Users user = userOpt.get();
-        if (user.getSearch() == null) {
-            user.setSearch(new ArrayList<>());
-        }
+        Search search = searchData.toEntity();
 
-        user.getSearch().add(searchData.toEntity());
+        user.setSearch(search);
         usersRepository.save(user);
 
         return Optional.of(searchData);
@@ -59,18 +54,16 @@ public class SearchService {
         return true;
     }
 
-    public Optional<List<SearchDTO>> getSearchByidUsers(String idUsers) {
+    public Optional<SearchDTO> getSearchByidUsers(String idUsers) {
         return usersRepository.findById(idUsers)
                 .map(Users::getSearch)
-                .map(searchList -> searchList.stream()
-                        .map(search -> new SearchDTO(
-                                search.getAge(),
-                                search.isRegularMenstruation(),
-                                search.isUseContraceptive(),
-                                search.getContraceptiveType(),
-                                search.getLastMenstruationDay(),
-                                search.getCycleDuration()
-                        ))
-                        .toList());
+                .map(search -> new SearchDTO(
+                        search.getAge(),
+                        search.isRegularMenstruation(),
+                        search.isUseContraceptive(),
+                        search.getContraceptiveType(),
+                        search.getLastMenstruationDay(),
+                        search.getCycleDuration()
+                ));
     }
 }
