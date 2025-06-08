@@ -18,7 +18,7 @@ public class CallendarController {
 
     @GetMapping("/calendar")
     public String exibirCalendario(HttpSession session, Model model) {
-        return "calendario"; // retorna a página HTML com o calendário
+        return "calendario";
     }
 
     @GetMapping("/calendar-data")

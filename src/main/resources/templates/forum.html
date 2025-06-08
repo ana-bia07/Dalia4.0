@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Fórum</title>
+    <link rel="stylesheet" href="/forum/forum.css" />
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="/forum/img/navbar/Logo_dalia.png" alt="Logo">
+    </div>
+    <nav>
+        <ul>
+            <li class="Home"><a href="../home/index.html"><img src="/forum/img/navbar/Home__nav.svg" alt=""></a></li>
+            <li class="Calendario"><a href="../calendario/calendario.html"><img src="/forum/img/navbar/Calendar__nav.svg"></a></li>
+            <li class="forum"><a href="/posts/forum"><img src="/forum/img/navbar/Fórum-full__nav.svg"></a></li>
+            <li class="principal"><a href="../principal/principal.html"><img src="/forum/img/navbar/Flower__nav.svg" alt=""></a></li>
+            <li class="perfil"><a href="../perfil/perfil.html"><img src="/forum/img/navbar/Perfil__nav.svg"></a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+
+    <form id="postForm" th:action="@{/posts/create-form}" method="post" th:object="${newPost}" class="post-creation">
+        <h2>Criar Post</h2>
+        <input type="text" name="title" th:field="*{title}" placeholder="Título" required />
+        <textarea name="content" th:field="*{content}" placeholder="Escreva seu post..." required></textarea>
+        <button type="submit">Publicar</button>
+    </form>
+
+    <div class="posts">
+        <div th:each="post : ${posts}" class="Post" th:attr="data-post-id=${post.id}">
+            <div class="post__perfil">
+                <p class="post-title" th:text="${post.title}"></p>
+            </div>
+            <div class="text__content">
+                <p th:text="${post.content}"></p>
+            </div>
+            <div class="post__interact">
+                <div class="post__icons">
+                    <div class="like__content"
+                         th:attr="data-post-id=${post.id}"
+                         onclick="toggleLike(this)">
+                        <img src="/forum/img/forum_img/Heart%20-%20outlined.svg" alt="Curtir">
+                        <span class="like__count" th:text="${post.likes}">0</span>
+                    </div>
+                    <div class="comment__content">
+                        <img src="/forum/img/forum_img/Comments.svg"> <span class="comment__count" th:text="${post.comments != null ? #lists.size(post.comments) : 0}">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-form input--send">
+                <textarea class="comment-text input__interact"
+                          placeholder="Escreva um comentário..."
+                          maxlength="500"></textarea>
+                <img src="/forum/img/forum_img/Send.svg"
+                     class="send__icon"
+                     alt="Enviar"
+                     onclick="submitComment(this)"
+                     th:attr="data-post-id=${post.id}">
+            </div>
+
+            <div class="comments-section open">
+                <h4>Comentários:</h4>
+                <ul class="comments-list">
+                    <li th:each="comment : ${post.comments}" class="comment">
+                        <div class="comment__perfil">
+                            <img src="/forum/img/default-profile.png" alt="Perfil" class="foto__perfil">
+                            <div class="comment__info">
+                                <p class="nome__perfil" th:text="${comment.idUsers != null ? comment.idUsers : 'Anônimo'}"></p>
+                                <p class="comment__text comment-content" th:text="${comment.comment}"></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="/forum/forum.js"></script>
+</body>
+</html>
