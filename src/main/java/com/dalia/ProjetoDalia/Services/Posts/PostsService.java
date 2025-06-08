@@ -47,23 +47,4 @@ public class PostsService {
             return postsRepository.save(existingPost);
         });
     }
-
-    public boolean incrementLikes(String idPosts) {
-        return postsRepository.findById(idPosts).map(post -> {
-            post.setLikes(post.getLikes() + 1);
-            postsRepository.save(post);
-            return true;
-        }).orElse(false);
-    }
-
-    public boolean decrementLikes(String idPosts) {
-        return postsRepository.findById(idPosts).map(post -> {
-            int currentLikes = post.getLikes();
-            if (currentLikes > 0) {
-                post.setLikes(currentLikes - 1);
-                postsRepository.save(post);
-            }
-            return true;
-        }).orElse(false);
-    }
 }

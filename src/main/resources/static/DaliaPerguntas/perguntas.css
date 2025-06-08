@@ -61,7 +61,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 70px;
 }
 
 .linha {
@@ -121,13 +121,10 @@ body{
 }
 
 .perguntas {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
     align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .perguntas__btn {
@@ -215,18 +212,15 @@ input[type="radio"]:checked {
     font-weight: bolder;
     text-align: center;
 }
+h5{
+    font-size: 20px;
+    text-align: center;
+}
 
 .resposta{
     display: flex;
-    justify-content: space-evenly;
-}
-
-.resposta_calendar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
-    gap: 350px;
+    align-items: center;
 }
 
 .formulario{
@@ -244,20 +238,6 @@ input[type="radio"]:checked {
     box-sizing: border-box;
 }
 
-.pergunta{
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-
-.resposta{
-    display: flex;
-    justify-content: space-evenly;
-}
-
-
 .volta{
     position:  absolute;
     left: 30px;
@@ -269,6 +249,7 @@ img{
     justify-content: left;
     display: flex;
     align-items: start;
+    margin: 20px;
 }
 
 
@@ -292,6 +273,18 @@ img{
 }
 
 
+input[type="text"] {
+    width: 250px;
+    padding: 12px;
+    border: 1px solid rgba(124, 127, 205, 1);
+    border-radius: 10px;
+    font-family: "Catamaran", sans-serif;
+    font-size: 16px;
+    text-align: center;
+    margin: 5%
+}
+
+
 
 .campo-calendario label {
     text-align: center;
@@ -302,64 +295,20 @@ img{
     color: black;
 }
 
-.section input[type="text"],
-.section input[type="number"],
-.section input[type="date"] {
-    width: 80%;
-    max-width: 400px;
-    padding: 15px;
-    border-radius: 12px;
+input[type="number"] {
+    width: 250px;
+    padding: 12px;
     border: 1px solid rgba(124, 127, 205, 1);
-    font-size: 18px;
+    border-radius: 10px;
     font-family: "Catamaran", sans-serif;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    background-color: #f9f9f9;
+    font-size: 16px;
     text-align: center;
-    margin-top: 10px;
-}
-
-.ultima__pag p {
-    font-size: 42px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 25px;
-    font-family: "Frank Ruhl Libre", serif;
-}
-
-.ultima__pag input[type="text"],
-.ultima__pag input[type="number"] {
-    width: 80%;
-    max-width: 420px;
-    padding: 15px;
-    font-size: 18px;
-    font-family: "Catamaran", sans-serif;
-    border-radius: 12px;
-    border: 1px solid rgba(124, 127, 205, 1);
-    background-color: #f0f0f0;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.flatpickr-rContainer{
-    width: 100% !important;
+    background-color:#f0f0f0;
+    margin: 5%
 }
 
 .dayContainer{
-    background-color: rgb(239 164 183);
-    width: 430px !important;
-    max-width: 500px !important;
-
-}
-
-.flatpickr-days{
-    width: 100% !important;
-    border-radius: 4px;
-}
-
-.flatpickr-day{
-    max-width: 70px !important;
-    color: black !important;
-    font-weight: 500;
+    background-color: rgba(124, 127, 205, 1);
 }
 
 .flatpickr-day:hover {
@@ -380,17 +329,9 @@ span.flatpickr-weekday{
 }
 
 .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay, .flatpickr-day.notAllowed, .flatpickr-day.notAllowed.prevMonthDay, .flatpickr-day.notAllowed.nextMonthDay {
-    color: #ffffff !important;
+    color: burlywood  !important;
 
     background: transparent;
     border-color: transparent;
     cursor: default;
-}
-
-.flatpickr-calendar.open, .flatpickr-calendar.inline{
-    width: 430px;
-}
-
-.flatpickr-days {
-    width: 430px;
-}
+}   

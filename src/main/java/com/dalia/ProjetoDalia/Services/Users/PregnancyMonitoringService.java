@@ -34,7 +34,7 @@ public class PregnancyMonitoringService {
         return usersRepository.findById(idUsers)
                 .map(Users::getPregnancyMonitoring)
                 .map(pregnancyMonitoring -> new PregnancyMonitoringDTO(
-                        pregnancyMonitoring.isPregnant(),
+                        pregnancyMonitoring.getIsPregnant(),
                         pregnancyMonitoring.getDayPregnancy(),
                         pregnancyMonitoring.getGestationWeeks(),
                         pregnancyMonitoring.getExpectedBirthDate(),
@@ -75,7 +75,7 @@ public class PregnancyMonitoringService {
 
     private PregnancyMonitoringDTO toDTO(PregnancyMonitoring entity) {
         return new PregnancyMonitoringDTO(
-                entity.isPregnant(),
+                entity.getIsPregnant(),
                 entity.getDayPregnancy(),
                 entity.getGestationWeeks(),
                 entity.getExpectedBirthDate(),

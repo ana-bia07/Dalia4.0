@@ -35,9 +35,8 @@ public class SearchService {
         if (userOpt.isEmpty()) return Optional.empty();
 
         Users user = userOpt.get();
-        Search search = searchData.toEntity();
 
-        user.setSearch(search);
+        user.setSearch(searchData.toEntity());
         usersRepository.save(user);
 
         return Optional.of(searchData);
