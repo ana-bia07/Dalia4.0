@@ -18,6 +18,8 @@ nav ul {
     list-style: none;
     display: flex;
     gap: 20px;
+    padding: 0;
+    margin: 0;
 }
 
 nav ul li a {
@@ -55,21 +57,9 @@ h2 {
     max-width: 800px;
     margin: 0 auto;
     position: relative;
-}
-
-.calendar-nav {
-    max-width: 800px;
-    margin: 10px auto;
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.calendar-nav .button {
-    flex: 1;
-    max-width: 180px;
-    min-width: 120px;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #calendar {
@@ -78,40 +68,13 @@ h2 {
     height: auto !important;
 }
 
-/* Estilo dos dias coloridos pelo FullCalendar */
-.fc-daygrid-day.fc-day-menstruacao,
-.day.menstruacao {
-    background-color: #FF4D4D !important;
-    color: white;
+#btn-controls{
+    display: flex;
+    justify-content: space-between;
 }
 
-.fc-daygrid-day.fc-day-fertil,
-.day.fertil {
-    background-color: #4D90FE !important;
-    color: white;
-}
-.fc-event.fc-event-background {
-    border-radius: 999px !important;
-    opacity: 100 !important;
-    margin: 2px !important;
-    top: 4px !important;
-    height: 14px !important;
-    transform: translateY(-6px);
-    z-index: 1 !important;
-}
-
-.fc-daygrid-day.fc-day-ovulacao,
-.day.ovulacao {
-    background-color: #4CAF50 !important;
-    color: white;
-}
-
-#proxima-menstruacao {
-    font-size: 16px;
-    margin-top: 15px;
-    color: #333;
-    font-weight: 600;
-    text-align: center;
+#month-year{
+    font-size: 22px;
 }
 
 /* Box explicativo */
@@ -199,4 +162,54 @@ button {
     border-radius: 4px;
     padding: 6.4px 10.4px;
     cursor: pointer;
+}
+
+/* === Estilo dos eventos arredondados no FullCalendar === */
+.fc-event {
+    border-radius: 36px !important;
+    padding: 2px 8px !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    opacity: 1 !important;
+    border: none !important;
+    white-space: nowrap !important;
+}
+
+.fc-event.Menstruacao {
+    background-color: #ff3737 !important;
+    color: white !important;
+}
+
+.fc-event.fertil {
+    background-color: #4D90FE !important;
+    color: white !important;
+}
+
+.fc-event.ovulacao {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+
+.fc-daygrid-day {
+    background-color: white;
+    color: black;
+}
+
+.fc-bg-event {
+    z-index: 1;
+}
+.fc-daygrid-day-frame {
+    position: relative;
+    z-index: 2;
+}
+
+.fc-h-event .fc-event-title-container {
+    display: flex;
+    height: 25px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }

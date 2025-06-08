@@ -221,6 +221,14 @@ input[type="radio"]:checked {
     justify-content: space-evenly;
 }
 
+.resposta_calendar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 350px;
+}
+
 .formulario{
     height: 100vh;
     width: 100vw !important;
@@ -239,6 +247,7 @@ input[type="radio"]:checked {
 .pergunta{
     align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -331,8 +340,26 @@ img{
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.flatpickr-rContainer{
+    width: 100% !important;
+}
+
 .dayContainer{
-    background-color: rgba(124, 127, 205, 1);
+    background-color: rgb(239 164 183);
+    width: 430px !important;
+    max-width: 500px !important;
+
+}
+
+.flatpickr-days{
+    width: 100% !important;
+    border-radius: 4px;
+}
+
+.flatpickr-day{
+    max-width: 70px !important;
+    color: black !important;
+    font-weight: 500;
 }
 
 .flatpickr-day:hover {
@@ -353,9 +380,17 @@ span.flatpickr-weekday{
 }
 
 .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay, .flatpickr-day.notAllowed, .flatpickr-day.notAllowed.prevMonthDay, .flatpickr-day.notAllowed.nextMonthDay {
-    color: burlywood  !important;
+    color: #ffffff !important;
 
     background: transparent;
     border-color: transparent;
     cursor: default;
-}   
+}
+
+.flatpickr-calendar.open, .flatpickr-calendar.inline{
+    width: 430px;
+}
+
+.flatpickr-days {
+    width: 430px;
+}

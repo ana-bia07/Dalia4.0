@@ -92,7 +92,7 @@ public class UsersController {
             Users user = optionalUser.get();
             if (user.getPassword().equals(password)) {
                 Session.setAttribute("idUser", user.getId());                model.addAttribute("user", user);
-                return "redirect:/calendar";  // Página inicial após login
+                return "redirect:Home/index.html";  // Página inicial após login
             }
         }
         model.addAttribute("error", "E-mail ou senha inválidos!");

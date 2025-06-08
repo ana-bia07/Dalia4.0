@@ -108,8 +108,8 @@
                         <p class="pergunta__txt">Não</p>
                         <input type="radio" th:field="*{useContraceptive}" value="false"></label>
                 </li>
-            </ul>
             <button type="button" class="proximo">Avançar</button>
+            </ul>
         </div>
 
         <!-- SECTION 4 -->
@@ -144,9 +144,9 @@
                             <input type="radio" th:field="*{contraceptiveType}" value="DIU">
                         </label>
                     </li>
+            <button type="button" class="proximo">Avançar</button>
                 </ul>
             </div>
-            <button type="button" class="proximo">Avançar</button>
         </div>
 
         <!-- SECTION 5 -->
@@ -155,10 +155,10 @@
                 <button class="volta" type="button"><img th:src="@{/DaliaPerguntas/img/back-vector.svg}"></button>
                 <p>Qual foi o primeiro dia da sua última menstruação?</p>
             </div>
-            <div class="resposta">
+            <div class="resposta_calendar">
                 <input type="date" th:field="*{lastMenstruationDay}" id="menstruationDate">
-            </div>
             <button type="button" class="proximo">Avançar</button>
+            </div>
         </div>
 
         <!-- SECTION 6 -->
@@ -166,7 +166,7 @@
             <div class="pergunta">
                 <button class="volta" type="button"><img th:src="@{/DaliaPerguntas/img/back-vector.svg}"></button>
                 <p>Quantos dias dura o seu ciclo menstrual?</p>
-                <h6>Escolha um numero de 21 a 35. Caso não saiba, coloque 28.</h6>
+                <h1>Escolha um numero de 21 a 35. Caso não saiba, coloque 28.</h1>
             </div>
             <div class="resposta">
                 <input type="number" th:field="*{cycleDuration}" min="21" max="35" placeholder="Ex: 28">
@@ -179,7 +179,7 @@
             <div class="pergunta">
                 <button class="volta" type="button"><img th:src="@{/DaliaPerguntas/img/back-vector.svg}"></button>
                 <p>Quantos dias dura sua menstruação?</p>
-                <h6>Informe entre 1 a 10 dias.</h6>
+                <h1>Informe entre 1 a 10 dias.</h1>
             </div>
             <div class="resposta">
                 <input type="number" th:field="*{menstruationDuration}" min="1" max="10" placeholder="Ex: 5">
@@ -193,19 +193,21 @@
                 <button class="volta B4"><img src="img/back-vector.svg" alt=""></button>
             </div>
             <div class="enviar">
-                <button type="submit" class="btn__enviar proximo">Enviar</button>
+                <button type="submit" class="btn__enviar proximo">Finalizar Pesquisa</button>
             </div>
         </div>
     </div>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 <script>
 
     document.addEventListener("DOMContentLoaded", () => {
         console.log("JS EM ADAEMNETJOJTGAT")
         flatpickr("#menstruationDate", {
-            dateFormat: "Y-m-d"
+            dateFormat: "Y-m-d",
+            locale: "pt"
         });
 
         const sections = document.querySelectorAll(".section");
