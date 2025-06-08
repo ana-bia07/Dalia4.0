@@ -3,31 +3,31 @@ package com.dalia.ProjetoDalia.Services.Posts;
 import com.dalia.ProjetoDalia.Entity.Comments;
 import com.dalia.ProjetoDalia.Entity.Posts;
 import com.dalia.ProjetoDalia.Repository.PostsRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CommentsService {
 
-    private final PostsRepository postsRepository;
+    @Autowired
+    private PostsRepository postsRepository;
 
-    public void addComment(String postId, Comments comment) {
+    public Optional<Posts> addComment(String postId, Comments comment) {
         Optional<Posts> postOpt = postsRepository.findById(postId);
         if (postOpt.isPresent()) {
             Posts post = postOpt.get();
+
+            if (post.getComments() == null) {
+                post.setComments(new ArrayList<>());
+            }
+
             post.getComments().add(comment);
             postsRepository.save(post);
+            return Optional.of(post);
         }
-    }
-
-    public List<Comments> getCommentsByPostId(String postId) {
-        return postsRepository.findById(postId)
-                .map(Posts::getComments)
-                .orElse(Collections.emptyList());
+        return Optional.empty();
     }
 }

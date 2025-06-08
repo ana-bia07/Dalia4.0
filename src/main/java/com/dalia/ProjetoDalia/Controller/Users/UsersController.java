@@ -32,7 +32,7 @@ public class UsersController {
 
     @GetMapping("/")
     public String redirectToLandingPage() {
-        return "redirect:/LandingPage/LandingPage.html"; // Redireciona para a landing page
+        return "redirect:/LandingPage/LandingPage.html";
     }
 
     @GetMapping("/users")
@@ -40,10 +40,10 @@ public class UsersController {
     public String findAll(Model model) {
         try {
             model.addAttribute("users", usersServices.getAll());
-            return "users/list"; // Exemplo de página Thymeleaf com lista de usuários
+            return "users/list";
         } catch (Exception e) {
             model.addAttribute("error", "Erro ao buscar usuários: " + e.getMessage());
-            return "error"; // Exemplo de página de erro
+            return "error";
         }
     }
 
@@ -77,7 +77,7 @@ public class UsersController {
         usersRepository.save(user);
 
         session.setAttribute("idUser", user.getId());
-        return "redirect:/search"; // Ajuste a URL de redirecionamento
+        return "redirect:/search";
     }
 
     @GetMapping("/login")
@@ -96,7 +96,7 @@ public class UsersController {
             }
         }
         model.addAttribute("error", "E-mail ou senha inválidos!");
-        return "Login";  // Retorna para a página de login
+        return "Login";
     }
 
     @GetMapping("/search")
@@ -132,9 +132,9 @@ public class UsersController {
                     existingUser.getPregnancyMonitoring()
             );
             usersServices.updateUser(idUser, dto);
-            session.setAttribute("search", search); // ← Adicione isto aqui
+            session.setAttribute("search", search);
         }
-        return "redirect:/calendar"; // ← Melhor redirecionar diretamente pro controller correto
+        return "redirect:/Home/index.html";
     }
 
 
