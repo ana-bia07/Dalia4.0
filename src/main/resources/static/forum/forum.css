@@ -14,42 +14,47 @@ body {
 }
 
 header {
-    width: 100%;
     background: #FFF2EC;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #000;
-    padding: 4px 12px;
-    height: 70px;
+    padding: 10px 20px;
 }
 
 .logo img {
-    width: 60px;
+    width: 80px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
     gap: 14px;
+    padding: 0;
+    margin: 0;
 }
 
 nav ul li {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    font-size: 12px;
+}
+
+nav ul li img {
+    width: 30px;
+    height: 30px;
+}
+
+nav ul li .legenda {
+    font-size: 15px;
+    color: #333;
+    margin-top: 5px;
 }
 
 nav ul li a {
-    font-size: 14px;
-    color: #333;
     text-decoration: none;
-}
-
-nav img {
-    width: 30px;
-    height: auto;
+    color: #333;
 }
 
 /* Container geral */

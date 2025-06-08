@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 
+@Document(collection = "search")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +18,6 @@ public class Search {
     private String contraceptiveType;
     @Field(name = "lastMenstruationDay")
     private LocalDate lastMenstruationDay;
+    private Integer menstruationDuration = 5;
     private int cycleDuration;
-
 }

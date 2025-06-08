@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dália</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,30 +13,45 @@
 <body>
 <header>
     <div class="logo">
-        <img th:src="@{/Perfil/img/navbar/Logo_dalia.png}" alt="Logo">
+        <img src="/Perfil/img/navbar/Logo_dalia.png" alt="Logo">
     </div>
     <nav>
         <ul>
-            <li class="Home"><a href="../home/index.html"><img th:src="@{/Perfil/img/navbar/Home__nav.svg}" alt=""></a></li>
-            <li class="Calendario"><a href="../calendario/calendario.html"><img th:src="@{/Perfil/img/navbar/Calendar__nav.svg}"></a></li>
-            <li class="forum"><a href="../forum/forum.html"><img th:src="@{/Perfil/img/navbar/Fórum__nav.svg}"></a></li>
-            <li class="principal"><a href="../principal/principal.html"><img th:src="@{/Perfil/img/navbar/Flower__nav.svg}" alt=""></a></li>
-            <li class="perfil"><a href="../Perfil/perfil.html"><img th:src="@{/Perfil/img/navbar/profile-full__nav.svg}"></a></li>
+            <li class="Home">
+                <a href="../home/index.html"><img src="/Perfil/img/navbar/Home__nav.svg" alt="Início"></a>
+                <span class="legenda">HomePage</span>
+            </li>
+            <li class="Calendario">
+                <a href="/calendar"><img src="/Perfil/img/navbar/Calendar__nav.svg" alt="Calendário"></a>
+                <span class="legenda">Calendário</span>
+            </li>
+            <li class="forum">
+                <a href="/posts"><img src="/Perfil/img/navbar/Fórum__nav.svg" alt="Comunidade"></a>
+                <span class="legenda">Fórum</span>
+            </li>
+            <li class="principal">
+                <a href="../Emocoes/emocoes.html"><img src="/Perfil/img/navbar/Flower__nav.svg" alt="Emoções"></a>
+                <span class="legenda">Emoções</span>
+            </li>
+            <li class="perfilh">
+                <a href="/Home/perfil"><img src="/Perfil/img/navbar/profile-full__nav.svg" alt="Perfil"></a>
+                <span class="legenda">Perfil</span>
+            </li>
         </ul>
     </nav>
 </header>
 
 <main>
-    <div class="modo-toggle">
-            <a th:href="@{/Home/index.html}"
-               th:classappend="${modoAtual} == 'menstruacao' ? ' ativo' : ''">Menstruação</a>
-
-            <a th:href="@{/Gravidez/pesquisa}"
-               th:classappend="${modoAtual} == 'gravidez' ? ' ativo' : ''">Gravidez</a>
-    </div>
     <div class="Area">
+    <div class="modo-toggle">
+        <a th:href="@{/Home/index.html}"
+           th:classappend="${modoAtual} == 'menstruacao' ? ' ativo' : ''">Menstruação</a>
+
+        <a th:href="@{/Gravidez/pesquisa}"
+           th:classappend="${modoAtual} == 'gravidez' ? ' ativo' : ''">Gravidez</a>
+    </div>
         <h1 class="titulo">Área do usuário</h1>
-        <div class="perfil" >
+        <div class="perfil">
             <div class="user-img">
                 <img th:src="@{/Perfil/img/perfil_img/perfil.png}" id="foto" class="perfil__foto">
                 <label for="input-file" id="uploadft">
@@ -87,7 +101,7 @@
     <div class="footer-content">
         <img th:src="@{/Perfil/img/navbar/Logo_dalia.png}" alt="logo dália" class="footer-logo">
         <div class="language-selector">
-            <img th:src="@{/Perfil/img/home_img/bandeira.png}" alt="bandeira brasil">
+            <img th:src="@{/Perfil/img/perfil_img/bandeira.png}" alt="bandeira brasil">
             <span>Português do Brasil</span>
         </div>
         <div class="social-media">
@@ -115,19 +129,11 @@
     </div>
 </footer>
 
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
 <script th:src="@{/Perfil/perfil.js}"></script>
-
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -31,7 +31,7 @@ public class GravidezController {
         }
         model.addAttribute("idUser", idUser);
         model.addAttribute("pregnancyMonitoring", new PregnancyMonitoring());
-        return "Pesquisas/pesquisagravidez";
+        return "/pesquisagravidez";
     }
 
     @PostMapping("/salvar-pesquisa")

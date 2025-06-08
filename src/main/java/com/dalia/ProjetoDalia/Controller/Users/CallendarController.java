@@ -40,17 +40,11 @@ public class CallendarController {
 
         for (int i = 0; i < 3; i++) {
             LocalDate inicioCiclo = ultimaMenstruacao.plusDays((long) i * duracaoCiclo);
-
-            // Menstruação
             for (int j = 0; j < duracaoMenstruacao; j++) {
                 menstruacao.add(inicioCiclo.plusDays(j));
             }
-
-            // Ovulação
             LocalDate diaOvulacao = inicioCiclo.plusDays(duracaoCiclo - 14);
             ovulacao.add(diaOvulacao);
-
-            // Fase fértil (5 dias antes até 1 dia depois da ovulação)
             for (int j = -5; j <= 1; j++) {
                 fertil.add(diaOvulacao.plusDays(j));
             }
@@ -106,22 +100,13 @@ public class CallendarController {
         if (dataStr == null || dataStr.isEmpty()) {
             return Map.of("error", "Data não informada");
         }
-
         LocalDate novaData = LocalDate.parse(dataStr);
-
         Search search = (Search) session.getAttribute("search");
         if (search == null) {
             return Map.of("error", "Usuário não respondeu a pesquisa");
         }
-
-        // Atualiza a data da última menstruação
         search.setLastMenstruationDay(novaData);
-
-
-        // Atualiza o objeto na sessão (se necessário)
         session.setAttribute("search", search);
-
         return Map.of("status", "ok");
     }
 }
-

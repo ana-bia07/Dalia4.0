@@ -8,6 +8,7 @@ import com.dalia.ProjetoDalia.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.SessionTrackingMode;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class UsersController {
 
     @GetMapping("/")
     public String redirectToLandingPage() {
-        return "redirect:/LandingPage/LandingPage.html"; // Redireciona para a landing page
+        return "redirect:/LandingPage/LandingPage.html";
     }
 
     @GetMapping("/users")
@@ -39,16 +40,16 @@ public class UsersController {
     public String findAll(Model model) {
         try {
             model.addAttribute("users", usersServices.getAll());
-            return "users/list"; // Exemplo de página Thymeleaf com lista de usuários
+            return "users/list";
         } catch (Exception e) {
             model.addAttribute("error", "Erro ao buscar usuários: " + e.getMessage());
-            return "error"; // Exemplo de página de erro
+            return "error";
         }
     }
 
     @GetMapping("/cadastro")
     public String cadastro() {
-        return "cadastro/cadastro";
+        return "cadastro";
     }
 
 
@@ -76,29 +77,26 @@ public class UsersController {
         usersRepository.save(user);
 
         session.setAttribute("idUser", user.getId());
-        // Redireciona para a página de login após o cadastro bem-sucedido
-        return "redirect:/search"; // Ajuste a URL de redirecionamento
+        return "redirect:/search";
     }
 
     @GetMapping("/login")
     public String MostraLogin(){
-        return "Login/Login";
+        return "Login";
     }
 
     @PostMapping("/RealizaLogin")
-    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model,
-                        HttpSession session) {
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession Session) {
         Optional<Users> optionalUser = usersRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
             if (user.getPassword().equals(password)) {
-                session.setAttribute("idUser", user.getId());
-                model.addAttribute("user", user);
-                return "redirect:/Home/index.html";  // Página inicial após login
+                Session.setAttribute("idUser", user.getId());                model.addAttribute("user", user);
+                return "redirect:Home/index.html";  // Página inicial após login
             }
         }
         model.addAttribute("error", "E-mail ou senha inválidos!");
-        return "Login/Login";  // Retorna para a página de login
+        return "Login";
     }
 
     @GetMapping("/search")
@@ -111,12 +109,16 @@ public class UsersController {
 
         model.addAttribute("idUser", idUser);
         model.addAttribute("search", new Search());
-        return "Pesquisas/perguntas"; // Nome do arquivo Thymeleaf: resources/templates/pesquisa.html
+        return "perguntas"; // Nome do arquivo Thymeleaf: resources/templates/pesquisa.html
     }
 
     @PostMapping("/salvar-respostas")
-    public String processarFormulario(@ModelAttribute("search") Search search, @RequestParam String idUser) {
-        System.out.println("ID RECEBIDO:" + idUser);
+    public String processarFormulario(@ModelAttribute("search") Search search, HttpSession session) {
+        String idUser = (String) session.getAttribute("idUser");
+        if (idUser == null) {
+            return "redirect:/login";
+        }
+
         Optional<Users> userOpt = usersRepository.findById(idUser);
         if (userOpt.isPresent()) {
             Users existingUser = userOpt.get();
@@ -130,9 +132,11 @@ public class UsersController {
                     existingUser.getPregnancyMonitoring()
             );
             usersServices.updateUser(idUser, dto);
+            session.setAttribute("search", search);
         }
         return "redirect:/Home/index.html";
     }
+
 
     @GetMapping("/{idUsers}")
     @Operation(summary = "Busca um usuário pelo Id", description = "Rota para buscar um usuário pelo Id")

@@ -79,5 +79,4 @@ function aplicarQuebraComentarios() {
     });
 }
 
-// Chama ao carregar a página (aplica formatação aos comentários já renderizados)
 document.addEventListener("DOMContentLoaded", aplicarQuebraComentarios);

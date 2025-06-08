@@ -16,13 +16,15 @@ public class CommentsService {
 
     private final PostsRepository postsRepository;
 
-    public void addComment(String postId, Comments comment) {
+    public Optional<Posts> addComment(String postId, Comments comment) {
         Optional<Posts> postOpt = postsRepository.findById(postId);
         if (postOpt.isPresent()) {
             Posts post = postOpt.get();
             post.getComments().add(comment);
             postsRepository.save(post);
+            return Optional.of(post);
         }
+        return Optional.empty();
     }
 
     public List<Comments> getCommentsByPostId(String postId) {

@@ -86,7 +86,7 @@
                             <p class="pergunta__txt">Não</p>
                             <input class="B2"  type="radio" th:field="*{regularMenstruation}" value="false"></label>
                     </li>
-                    <button type="button" class="proximo">Avançar</button>
+                <button type="button" class="proximo">Avançar</button>
                 </ul>
             </div>
         </div>
@@ -97,19 +97,22 @@
                 <button class="volta" type="button"><img th:src="@{/DaliaPerguntas/img/back-vector.svg}"></button>
                 <p>Você usa algum anticoncepcional?</p>
             </div>
-            <ul class="resposta perguntas">
-                <li class="perguntas__btn">
-                    <label class="pergunta__label">
-                        <p class="pergunta__txt">Sim</p>
-                        <input type="radio" th:field="*{useContraceptive}" value="true"></label>
-                </li>
-                <li class="perguntas__btn">
-                    <label class="pergunta__label">
-                        <p class="pergunta__txt">Não</p>
-                        <input type="radio" th:field="*{useContraceptive}" value="false"></label>
-                </li>
-            <button type="button" class="proximo">Avançar</button>
-            </ul>
+            <div class="resposta">
+                <ul class="resposta perguntas">
+                    <li class="perguntas__btn">
+                        <label class="pergunta__label">
+                            <p class="pergunta__txt">Sim</p>
+                            <input type="radio" th:field="*{useContraceptive}" value="true"></label>
+                    </li>
+                    <li class="perguntas__btn">
+                        <label class="pergunta__label">
+                            <p class="pergunta__txt">Não</p>
+                            <input type="radio" th:field="*{useContraceptive}" value="false"></label>
+                            <input type="hidden" th:field="*{contraceptiveType}" value=" ">
+                    </li>
+                </ul>
+                <button type="button" class="proximo">Avançar</button>
+            </div>
         </div>
 
         <!-- SECTION 4 -->
@@ -144,8 +147,8 @@
                             <input type="radio" th:field="*{contraceptiveType}" value="DIU">
                         </label>
                     </li>
-            <button type="button" class="proximo">Avançar</button>
                 </ul>
+                <button type="button" class="proximo">Avançar</button>
             </div>
         </div>
 
@@ -155,9 +158,9 @@
                 <button class="volta" type="button"><img th:src="@{/DaliaPerguntas/img/back-vector.svg}"></button>
                 <p>Qual foi o primeiro dia da sua última menstruação?</p>
             </div>
-            <div class="resposta_calendar">
+            <div class="resposta">
                 <input type="date" th:field="*{lastMenstruationDay}" id="menstruationDate">
-            <button type="button" class="proximo">Avançar</button>
+                <button type="button" class="proximo">Avançar</button>
             </div>
         </div>
 
@@ -165,49 +168,33 @@
         <div id="section6" class="formulario section">
             <div class="pergunta">
                 <button class="volta" type="button"><img th:src="@{/DaliaPerguntas/img/back-vector.svg}"></button>
-                <p>Quantos dias dura o seu ciclo menstrual?</p>
-                <h1>Escolha um numero de 21 a 35. Caso não saiba, coloque 28.</h1>
+                <p>Quantos dias dura o seu ciclo menstrual?</p><br>
+                <h5>Escolha um numero de 21 a 35. Caso não saiba, coloque 28.</h5>
             </div>
             <div class="resposta">
                 <input type="number" th:field="*{cycleDuration}" min="21" max="35" placeholder="Ex: 28">
+                <button type="button" class="proximo">Avançar</button>
             </div>
-            <button type="button" class="proximo">Avançar</button>
         </div>
-
-        <!-- SECTION 7 - Duração da menstruação -->
-        <div id="section7" class="formulario section">
-            <div class="pergunta">
-                <button class="volta" type="button"><img th:src="@{/DaliaPerguntas/img/back-vector.svg}"></button>
-                <p>Quantos dias dura sua menstruação?</p>
-                <h1>Informe entre 1 a 10 dias.</h1>
-            </div>
-            <div class="resposta">
-                <input type="number" th:field="*{menstruationDuration}" min="1" max="10" placeholder="Ex: 5">
-            </div>
-            <button type="button" class="proximo">Avançar</button>
-        </div>
-
-        <div id="section8" class="formulario section hidden">
+        <div id="section7" class="formulario section hidden">
             <div class="ultima__pag">
                 <p>Obrigada por nos ajudar a<br>te entender melhor!</p>
                 <button class="volta B4"><img src="img/back-vector.svg" alt=""></button>
             </div>
             <div class="enviar">
-                <button type="submit" class="btn__enviar proximo">Finalizar Pesquisa</button>
+                <button type="submit" class="btn__enviar proximo">Enviar</button>
             </div>
         </div>
     </div>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 <script>
 
     document.addEventListener("DOMContentLoaded", () => {
         console.log("JS EM ADAEMNETJOJTGAT")
         flatpickr("#menstruationDate", {
-            dateFormat: "Y-m-d",
-            locale: "pt"
+            dateFormat: "Y-m-d"
         });
 
         const sections = document.querySelectorAll(".section");
@@ -218,7 +205,7 @@
                 sec.classList.remove("active");
             });
             sections[index].classList.add("active");
-            current = index;
+            current = index; // Atualiza a seção atual corretamente
         }
 
         document.querySelectorAll(".proximo").forEach(btn => {
@@ -229,6 +216,7 @@
                     if(sections[current].id === "section3"){
                         const selected = sections[current].querySelector('input[name="useContraceptive"]:checked');
                         if(selected && selected.value === "false"){
+                            contraceptiveType.value = false;
                             next++;
                         }
                     }

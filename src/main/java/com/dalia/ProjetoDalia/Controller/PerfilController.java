@@ -21,10 +21,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PerfilController {
     private final UsersRepository usersRepository;
-    private final UsersServices usersServices;
     private EmailService emailService;
 
-    @GetMapping("/Home/perfil")
+    @GetMapping("/perfil")
     public String perfil(Model model, HttpSession session) {
         String modo = (String) session.getAttribute("modoAtual");
         String idUser = (String) session.getAttribute("idUser");
@@ -43,7 +42,7 @@ public class PerfilController {
             if (user.getSearch() == null) user.setSearch(new Search());
             UsersDTO dto = new UsersDTO(user);
             model.addAttribute("userDTO", dto);
-            return "Perfil/perfil";
+            return "perfil";
         } else {
             return "redirect:/login";
         }
