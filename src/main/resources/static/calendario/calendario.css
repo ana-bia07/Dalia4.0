@@ -1,6 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #FFF2EC;
+    color: #333;
     margin: 0;
     padding: 0;
 }
@@ -49,7 +56,6 @@ nav ul li a {
     color: #333;
 }
 
-/* CALENDÁRIO */
 .calendar-section {
     text-align: center;
     padding: 20px;
@@ -82,16 +88,15 @@ h2 {
     height: auto !important;
 }
 
-#btn-controls {
+#btn-controls{
     display: flex;
     justify-content: space-between;
 }
 
-#month-year {
+#month-year{
     font-size: 22px;
 }
 
-/* BOX EXPLICATIVO */
 .explicacao {
     margin: 20px auto;
     padding: 15px;
@@ -144,7 +149,6 @@ h2 {
     background-color: #4CAF50;
 }
 
-/* BOTÕES */
 .button {
     background-color: #FF4D4D;
     color: #FFFFFF;
@@ -177,7 +181,6 @@ button {
     cursor: pointer;
 }
 
-/* === FULLCALENDAR ESTILO DOS EVENTOS === */
 .fc-event {
     border-radius: 36px !important;
     padding: 2px 8px !important;

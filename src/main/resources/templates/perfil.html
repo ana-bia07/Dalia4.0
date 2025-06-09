@@ -18,7 +18,7 @@
     <nav>
         <ul>
             <li class="Home">
-                <a href="../home/index.html"><img src="/Perfil/img/navbar/Home__nav.svg" alt="Início"></a>
+                <a href="/home"><img src="/Perfil/img/navbar/Home__nav.svg" alt="Início"></a>
                 <span class="legenda">HomePage</span>
             </li>
             <li class="Calendario">
@@ -34,7 +34,7 @@
                 <span class="legenda">Emoções</span>
             </li>
             <li class="perfilh">
-                <a href="/Home/perfil"><img src="/Perfil/img/navbar/profile-full__nav.svg" alt="Perfil"></a>
+                <a href="/perfil"><img src="/Perfil/img/navbar/profile-full__nav.svg" alt="Perfil"></a>
                 <span class="legenda">Perfil</span>
             </li>
         </ul>
@@ -44,7 +44,7 @@
 <main>
     <div class="Area">
     <div class="modo-toggle">
-        <a th:href="@{/Home/index.html}"
+        <a th:href="@{/templates/index.html}"
            th:classappend="${modoAtual} == 'menstruacao' ? ' ativo' : ''">Menstruação</a>
 
         <a th:href="@{/Gravidez/pesquisa}"

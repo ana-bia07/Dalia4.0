@@ -27,10 +27,9 @@
         </div>
         <div class="botoes">
             <button type="submit" class="botaoLogin">Login</button>
-            <a class="botaoCadastro" href="/templates/cadastro">Cadastre-se</a>
+            <a class="botaoCadastro" href="/cadastro">Cadastre-se</a>
         </div>
     </form>
-    <!-- Exibe erro de login, caso haja -->
     <div th:if="${error}" class="error-message">
         <p th:text="${error}"></p>
     </div>

@@ -7,9 +7,8 @@ import com.dalia.ProjetoDalia.Repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +62,32 @@ public class SearchService {
                         search.isUseContraceptive(),
                         search.getContraceptiveType(),
                         search.getLastMenstruationDay(),
-                        search.getCycleDuration()
+                        search.getCycleDuration(),
+                        search.getMenstruationDuration()
                 ));
+    }
+
+
+    // Verifica se a data está dentro do período da menstruação (5 dias a partir da última menstruação)
+    public boolean isMenstruacao(LocalDate data, LocalDate ultimaMenstruacao, int ciclo) {
+        LocalDate fimMenstruacao = ultimaMenstruacao.plusDays(4); // 5 dias (0 a 4)
+        return !data.isBefore(ultimaMenstruacao) && !data.isAfter(fimMenstruacao);
+    }
+
+    // Verifica se a data está no período fértil (dias -5 a 0 antes da ovulação)
+    public boolean isPeriodoFertil(LocalDate data, LocalDate ultimaMenstruacao) {
+        LocalDate ovulacao = calcularDiaOvulacao(ultimaMenstruacao);
+        LocalDate inicioFertil = ovulacao.minusDays(5);
+        return !data.isBefore(inicioFertil) && !data.isAfter(ovulacao);
+    }
+
+    // Verifica se a data é o dia da ovulação
+    public boolean isOvulacao(LocalDate data, LocalDate ultimaMenstruacao) {
+        LocalDate ovulacao = calcularDiaOvulacao(ultimaMenstruacao);
+        return data.isEqual(ovulacao);
+    }
+
+    public LocalDate calcularDiaOvulacao(LocalDate ultimaMenstruacao) {
+        return ultimaMenstruacao.plusDays(14);
     }
 }

@@ -7,9 +7,8 @@ import com.dalia.ProjetoDalia.Repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,22 +32,14 @@ public class PregnancyMonitoringService {
     public Optional<PregnancyMonitoringDTO> getPregnancyByidUsers(String idUsers) {
         return usersRepository.findById(idUsers)
                 .map(Users::getPregnancyMonitoring)
-                .map(pregnancyMonitoring -> new PregnancyMonitoringDTO(
-                        pregnancyMonitoring.getIsPregnant(),
-                        pregnancyMonitoring.getDayPregnancy(),
-                        pregnancyMonitoring.getGestationWeeks(),
-                        pregnancyMonitoring.getExpectedBirthDate(),
-                        pregnancyMonitoring.getConsultations()
-                ));
+                .map(this::toDTO);
     }
-
 
     public Optional<PregnancyMonitoringDTO> updatePregnancy(String idUsers, PregnancyMonitoringDTO dto) {
         Optional<Users> userOpt = usersRepository.findById(idUsers);
         if (userOpt.isEmpty()) return Optional.empty();
 
         Users user = userOpt.get();
-
         user.setPregnancyMonitoring(dto.toEntity());
         usersRepository.save(user);
 
@@ -61,16 +52,6 @@ public class PregnancyMonitoringService {
             user.setPregnancyMonitoring(null);
             usersRepository.save(user);
         });
-    }
-
-    private PregnancyMonitoring toEntity(PregnancyMonitoringDTO dto) {
-        return new PregnancyMonitoring(
-                dto.isPregnant(),
-                dto.dayPregnancy(),
-                dto.gestationWeeks(),
-                dto.expectedBirthDate(),
-                dto.consultations()
-        );
     }
 
     private PregnancyMonitoringDTO toDTO(PregnancyMonitoring entity) {

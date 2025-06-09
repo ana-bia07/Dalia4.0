@@ -62,7 +62,7 @@ public class UsersController {
 
         if (!password.equals(passconfirmation)) {
             model.addAttribute("error", "As senhas não coincidem.");
-            return "cadastro"; // Retorna à página de cadastro se as senhas não coincidirem
+            return "cadastro";
         }
 
         Users user = new Users();
@@ -91,8 +91,9 @@ public class UsersController {
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
             if (user.getPassword().equals(password)) {
-                Session.setAttribute("idUser", user.getId());                model.addAttribute("user", user);
-                return "redirect:Home/index.html";  // Página inicial após login
+                Session.setAttribute("idUser", user.getId());
+                model.addAttribute("user", user);
+                return "redirect:/home";
             }
         }
         model.addAttribute("error", "E-mail ou senha inválidos!");
@@ -134,7 +135,7 @@ public class UsersController {
             usersServices.updateUser(idUser, dto);
             session.setAttribute("search", search);
         }
-        return "redirect:/Home/index.html";
+        return "redirect:/home";
     }
 
 

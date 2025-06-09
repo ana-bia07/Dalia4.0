@@ -1,7 +1,6 @@
 package com.dalia.ProjetoDalia.DTOS.Users;
 
 import com.dalia.ProjetoDalia.Entity.Users.Search;
-
 import java.time.LocalDate;
 
 public record SearchDTO(
@@ -10,7 +9,8 @@ public record SearchDTO(
         boolean useContraceptive,
         String contraceptiveType,
         LocalDate lastMenstruationDay,
-        int cycleDuration
+        int cycleDuration,
+        Integer menstruationDuration  // adicionado aqui
 ) {
     public Search toEntity() {
         return new Search(
@@ -19,7 +19,7 @@ public record SearchDTO(
                 useContraceptive,
                 contraceptiveType,
                 lastMenstruationDay,
-                toEntity().getMenstruationDuration(),
+                menstruationDuration != null ? menstruationDuration : 5,  // valor padrão
                 cycleDuration);
     }
 }

@@ -74,7 +74,7 @@ public class PerfilController {
             user.getSearch().setContraceptiveType(userDTO.search().getContraceptiveType());
 
             usersRepository.save(user);
-            return "redirect:/Home/perfil";
+            return "redirect:/perfil";
         } else {
             return "redirect:/login";
         }
@@ -84,6 +84,6 @@ public class PerfilController {
     public String enviarDenuncia(@RequestParam("mensagem") String mensagem) {
     emailService.enviarDenuncia(mensagem);
 
-    return "redirect:/Home/perfil?denuncia=enviada";
+    return "redirect:/perfil?denuncia=enviada";
     }
 }
