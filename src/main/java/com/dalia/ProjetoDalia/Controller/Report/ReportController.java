@@ -1,9 +1,8 @@
 package com.dalia.ProjetoDalia.Controller.Report;
 
-import com.dalia.ProjetoDalia.DTOS.Reports.ReportDTO;
-import com.dalia.ProjetoDalia.Entity.Report;
+import com.dalia.ProjetoDalia.Model.DTOS.Reports.ReportDTO;
+import com.dalia.ProjetoDalia.Model.Entity.Report;
 import com.dalia.ProjetoDalia.Services.Report.ReportService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

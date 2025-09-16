@@ -1,9 +1,9 @@
 package com.dalia.ProjetoDalia.Controller;
 
-import com.dalia.ProjetoDalia.DTOS.Users.UsersDTO;
-import com.dalia.ProjetoDalia.Entity.Users.PregnancyMonitoring;
-import com.dalia.ProjetoDalia.Entity.Users.Users;
-import com.dalia.ProjetoDalia.Repository.UsersRepository;
+import com.dalia.ProjetoDalia.Model.DTOS.Users.UsersDTO;
+import com.dalia.ProjetoDalia.Model.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Users.PregnancyMonitoring;
+import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -37,9 +37,9 @@ public class GravidezController {
     @PostMapping("/salvar-pesquisa")
     public String salvarPesquisa(@ModelAttribute("pregnancyMonitoring") PregnancyMonitoring pregnancyMonitoring, @RequestParam String idUser){
         System.out.println("ID RECEBIDO:" + idUser);
-        Optional<Users> userOpt = usersRepository.findById(idUser);
+        Optional<Comments.Users> userOpt = usersRepository.findById(idUser);
         if(userOpt.isPresent()) {
-            Users existUser = userOpt.get();
+            Comments.Users existUser = userOpt.get();
             UsersDTO dto = new UsersDTO(
                     existUser.getName(),
                     existUser.getSurname(),

@@ -1,7 +1,7 @@
 package com.dalia.ProjetoDalia.Controller;
 
-import com.dalia.ProjetoDalia.DTOS.Users.SearchDTO;
-import com.dalia.ProjetoDalia.Entity.Users.Users;
+import com.dalia.ProjetoDalia.Model.DTOS.Users.SearchDTO;
+import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Services.Users.SearchService;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import com.mongodb.lang.Nullable;
@@ -29,7 +29,7 @@ public class HomeController {
             return "index";
         }
 
-        Users usuario = userService.getByEmail(principal.getName())
+        Comments.Users usuario = userService.getByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         model.addAttribute("userId", usuario.getId());
         return "index";
@@ -38,7 +38,7 @@ public class HomeController {
     @ResponseBody
     @GetMapping("/api/ciclo5dias-home/{idUser}")
     public List<Map<String, String>> getEventosCiclo5Dias(@PathVariable String idUser) {
-        Optional<SearchDTO> searchOpt = searchService.getSearchByidUsers(idUser);
+        Optional<SearchDTO> searchOpt = searchService.getSearchByIdUsers(idUser);
         if (searchOpt.isEmpty()) {
             return Collections.emptyList();
         }

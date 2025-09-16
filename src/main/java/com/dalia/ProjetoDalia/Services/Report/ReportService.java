@@ -1,8 +1,8 @@
 package com.dalia.ProjetoDalia.Services.Report;
 
-import com.dalia.ProjetoDalia.DTOS.Reports.ReportDTO;
-import com.dalia.ProjetoDalia.Entity.Report;
-import com.dalia.ProjetoDalia.Repository.ReportRepository;
+import com.dalia.ProjetoDalia.Model.DTOS.Reports.ReportDTO;
+import com.dalia.ProjetoDalia.Model.Entity.Report;
+import com.dalia.ProjetoDalia.Model.Repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

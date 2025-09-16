@@ -1,7 +1,7 @@
 package com.dalia.ProjetoDalia.Controller.Users;
 
 
-import com.dalia.ProjetoDalia.Entity.Users.Search;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Search;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

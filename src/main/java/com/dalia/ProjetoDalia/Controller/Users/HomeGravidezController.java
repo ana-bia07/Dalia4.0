@@ -1,6 +1,6 @@
 package com.dalia.ProjetoDalia.Controller;
 
-import com.dalia.ProjetoDalia.DTOS.Users.PregnancyMonitoringDTO;
+import com.dalia.ProjetoDalia.Model.DTOS.Users.PregnancyMonitoringDTO;
 import com.dalia.ProjetoDalia.Services.Users.PregnancyMonitoringService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +25,12 @@ public class HomeGravidezController {
             return "redirect:/login";
         }
 
-        PregnancyMonitoringDTO dto = pregnancyService.getPregnancyByidUsers(idUser).orElse(new PregnancyMonitoringDTO());
+        PregnancyMonitoringDTO dto = pregnancyService.getPregnancyByIdUser(idUser).orElse(new PregnancyMonitoringDTO());
         model.addAttribute("pregnancy", dto);
         model.addAttribute("idUser", idUser);
 
         // Para mostrar a lista de consultas como string separada por vírgulas (para formulário)
-        if (dto.getConsultations() != null && !dto.getConsultations().isEmpty()) {
+        if (dto.getConsultations() != null && !dto.getConsultations().wait()) {
             String consultationsString = String.join(", ", dto.getConsultations());
             model.addAttribute("consultationsString", consultationsString);
         } else {

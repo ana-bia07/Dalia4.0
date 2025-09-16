@@ -1,6 +1,6 @@
-package com.dalia.ProjetoDalia.DTOS.Reports;
+package com.dalia.ProjetoDalia.Model.DTOS.Reports;
 
-import com.dalia.ProjetoDalia.Entity.Report;
+import com.dalia.ProjetoDalia.Model.Entity.Report;
 
 import java.time.Instant;
 

@@ -1,7 +1,6 @@
-package com.dalia.ProjetoDalia.DTOS.Posts;
+package com.dalia.ProjetoDalia.Model.DTOS.Posts;
 
-import com.dalia.ProjetoDalia.Entity.Comments;
-import com.dalia.ProjetoDalia.Entity.Posts;
+import com.dalia.ProjetoDalia.Model.Entity.Comments;
 
 import java.time.Instant;
 

@@ -1,6 +1,6 @@
 package com.dalia.ProjetoDalia.Controller.Posts;
 
-import com.dalia.ProjetoDalia.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Services.Posts.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

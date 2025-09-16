@@ -1,8 +1,7 @@
 package com.dalia.ProjetoDalia.Controller.Posts;
 
-import com.dalia.ProjetoDalia.DTOS.Posts.PostsDTO;
-import com.dalia.ProjetoDalia.Entity.Comments;
-import com.dalia.ProjetoDalia.Entity.Posts;
+import com.dalia.ProjetoDalia.Model.DTOS.Posts.PostsDTO;
+import com.dalia.ProjetoDalia.Model.Entity.Posts;
 import com.dalia.ProjetoDalia.Services.Posts.PostsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

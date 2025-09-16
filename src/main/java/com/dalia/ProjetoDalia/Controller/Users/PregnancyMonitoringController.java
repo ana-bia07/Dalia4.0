@@ -1,6 +1,6 @@
 package com.dalia.ProjetoDalia.Controller.Users;
 
-import com.dalia.ProjetoDalia.DTOS.Users.PregnancyMonitoringDTO;
+import com.dalia.ProjetoDalia.Model.DTOS.Users.PregnancyMonitoringDTO;
 import com.dalia.ProjetoDalia.Services.Users.PregnancyMonitoringService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class PregnancyMonitoringController {
 
     @GetMapping("/{idUsers}")
     public ResponseEntity<PregnancyMonitoringDTO> get(@PathVariable String idUsers) {
-        return service.getPregnancyByidUsers(idUsers)
+        return service.getPregnancyByIdUser(idUsers)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

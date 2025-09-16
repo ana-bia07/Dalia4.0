@@ -1,8 +1,8 @@
 package com.dalia.ProjetoDalia.Services.Posts;
 
-import com.dalia.ProjetoDalia.Entity.Comments;
-import com.dalia.ProjetoDalia.Entity.Posts;
-import com.dalia.ProjetoDalia.Repository.PostsRepository;
+import com.dalia.ProjetoDalia.Model.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Posts;
+import com.dalia.ProjetoDalia.Model.Repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

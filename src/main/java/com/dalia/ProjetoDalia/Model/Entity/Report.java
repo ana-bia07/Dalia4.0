@@ -1,4 +1,4 @@
-package com.dalia.ProjetoDalia.Entity;
+package com.dalia.ProjetoDalia.Model.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

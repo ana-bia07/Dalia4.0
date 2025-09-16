@@ -1,7 +1,7 @@
-package com.dalia.ProjetoDalia.DTOS.Users;
-
-import com.dalia.ProjetoDalia.Entity.Users.Search;
+package com.dalia.ProjetoDalia.Model.DTOS.Users;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Search;
 import java.time.LocalDate;
+import java.util.List;
 
 public record SearchDTO(
         int age,
@@ -10,7 +10,10 @@ public record SearchDTO(
         String contraceptiveType,
         LocalDate lastMenstruationDay,
         int cycleDuration,
-        Integer menstruationDuration  // adicionado aqui
+        Integer menstruationDuration,
+        List<Integer> cycleHistory,
+        Integer minCycleDuration,
+        Integer maxCycleDuration
 ) {
     public Search toEntity() {
         return new Search(
@@ -20,6 +23,10 @@ public record SearchDTO(
                 contraceptiveType,
                 lastMenstruationDay,
                 menstruationDuration != null ? menstruationDuration : 5,  // valor padrão
-                cycleDuration);
+                cycleDuration,
+                null,
+                minCycleDuration,
+                maxCycleDuration
+        );
     }
 }

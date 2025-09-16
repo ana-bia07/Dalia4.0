@@ -1,4 +1,4 @@
-package com.dalia.ProjetoDalia.Entity.Users;
+package com.dalia.ProjetoDalia.Model.Entity.Users;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,6 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Consultations {
-
     @Field(name = "date")
     private Instant date;
     private String observations;

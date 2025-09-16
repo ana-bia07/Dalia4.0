@@ -1,6 +1,7 @@
 package com.dalia.ProjetoDalia.Controller.Users;
 
-import com.dalia.ProjetoDalia.DTOS.Users.SearchDTO;
+import com.dalia.ProjetoDalia.Model.DTOS.Users.SearchDTO;
+import com.dalia.ProjetoDalia.Model.DTOS.Users.UserCycleDataDTO;
 import com.dalia.ProjetoDalia.Services.Users.SearchService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,14 +23,21 @@ public class CicloController {
 
     @GetMapping("/ciclo5dias/{userId}")
     public List<Map<String, String>> getEventosCiclo(@PathVariable String userId) {
-        Optional<SearchDTO> searchOpt = searchService.getSearchByidUsers(userId);
+        // Obtém o DTO do Search do usuário
+        Optional<SearchDTO> searchOpt = searchService.getSearchByIdUsers(userId);
         if (searchOpt.isEmpty()) {
             return List.of(); // retorna lista vazia se não achar
         }
-
         SearchDTO search = searchOpt.get();
         LocalDate ultimaMenstruacao = search.toEntity().getLastMenstruationDay();
-        int ciclo = search.toEntity().getCycleDuration();
+
+        // Obtém os dados de ciclo mais curto e mais longo do serviço
+        Optional<UserCycleDataDTO> cycleDataOpt = searchService.getUserCycleData(userId);
+        if (cycleDataOpt.isEmpty()) {
+            // Retorna lista vazia ou erro se os dados de ciclo não existirem
+            return List.of();
+        }
+        UserCycleDataDTO cycleData = cycleDataOpt.get();
 
         List<Map<String, String>> eventos = new ArrayList<>();
         LocalDate hoje = LocalDate.now();
@@ -39,11 +47,12 @@ public class CicloController {
             String dataStr = data.toString();
 
             String status = null;
-            if (searchService.isMenstruacao(data, ultimaMenstruacao, ciclo)) {
+            // Chame os métodos do serviço com os novos parâmetros
+            if (searchService.isMenstruacao(data, ultimaMenstruacao)) {
                 status = "menstruacao";
-            } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao)) {
+            } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao, cycleData.minCycleDuration(), cycleData.maxCycleDuration())) {
                 status = "periodo_fertil";
-            } else if (searchService.isOvulacao(data, ultimaMenstruacao)) {
+            } else if (searchService.isOvulacao(data, ultimaMenstruacao, cycleData.maxCycleDuration())) {
                 status = "ovulacao";
             }
 
@@ -54,7 +63,6 @@ public class CicloController {
                 eventos.add(evento);
             }
         }
-
         return eventos;
     }
 }
