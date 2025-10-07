@@ -1,5 +1,6 @@
 package com.dalia.ProjetoDalia.Model.DTOS.Users;
 
+import com.dalia.ProjetoDalia.Model.Entity.Users.Consultation;
 import com.dalia.ProjetoDalia.Model.Entity.Users.PregnancyMonitoring;
 
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ public record PregnancyMonitoringDTO (
     LocalDate dayPregnancy,
     int gestationWeeks,
     LocalDate expectedBirthDate,
-    List<String> consultations
+    List<Consultation> consultations
 ) {
     public PregnancyMonitoring toEntity() {
         return new PregnancyMonitoring(
