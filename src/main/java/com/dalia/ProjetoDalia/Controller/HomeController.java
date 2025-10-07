@@ -30,7 +30,7 @@ public class HomeController {
         }
 
         Comments.Users usuario = userService.getByEmail(principal.getName())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado")).toEntity();
         model.addAttribute("userId", usuario.getId());
         return "index";
     }
@@ -44,8 +44,12 @@ public class HomeController {
         }
 
         SearchDTO search = searchOpt.get();
+
+
         LocalDate ultimaMenstruacao = search.toEntity().getLastMenstruationDay();
         int ciclo = search.toEntity().getCycleDuration();
+        int cicloMCurto = search.toEntity().getMinCycleDuration();
+        int cicloMLongo = search.toEntity().getMaxCycleDuration();
 
         LocalDate hoje = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -56,11 +60,11 @@ public class HomeController {
             LocalDate data = hoje.plusDays(offset);
 
             String status = null;
-            if (searchService.isMenstruacao(data, ultimaMenstruacao, ciclo)) {
+            if (searchService.isMenstruacao(data, ultimaMenstruacao)) {
                 status = "menstruacao";
-            } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao)) {
+            } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao, cicloMCurto, cicloMLongo )) {
                 status = "periodo_fertil";
-            } else if (searchService.isOvulacao(data, ultimaMenstruacao)) {
+            } else if (searchService.isOvulacao(data, ultimaMenstruacao, cicloMLongo)) {
                 status = "ovulacao";
             }
 
