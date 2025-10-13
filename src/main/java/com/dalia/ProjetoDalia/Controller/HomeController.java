@@ -32,15 +32,9 @@ public class HomeController {
             return "index";
         }
 
-<<<<<<< HEAD
         UsersDTO usuario = userService.getByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         model.addAttribute("userId", usuario.id());
-=======
-        Comments.Users usuario = userService.getByEmail(principal.getName())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado")).toEntity();
-        model.addAttribute("userId", usuario.getId());
->>>>>>> 1b11111a1dc4825814089594dbde480638c60977
         return "index";
     }
 
@@ -53,19 +47,10 @@ public class HomeController {
         }
 
         SearchDTO search = searchOpt.get();
-<<<<<<< HEAD
         LocalDate ultimaMenstruacao = search.lastMenstruationDay();
         int ciclo = search.cycleDuration();
         int cicloMaisCurto = search.minCycleDuration();
         int cicloMaisLongo = search.maxCycleDuration();
-=======
-
-
-        LocalDate ultimaMenstruacao = search.toEntity().getLastMenstruationDay();
-        int ciclo = search.toEntity().getCycleDuration();
-        int cicloMCurto = search.toEntity().getMinCycleDuration();
-        int cicloMLongo = search.toEntity().getMaxCycleDuration();
->>>>>>> 1b11111a1dc4825814089594dbde480638c60977
 
         LocalDate hoje = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -75,20 +60,12 @@ public class HomeController {
         for (int offset = -2; offset <= 2; offset++) {
             LocalDate data = hoje.plusDays(offset);
             String status = null;
-<<<<<<< HEAD
 
             if (searchService.isMenstruacao(data, ultimaMenstruacao)) {
                 status = "menstruacao";
             } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao, cicloMaisCurto, cicloMaisLongo)) {
                 status = "periodo_fertil";
             } else if (searchService.isOvulacao(data, ultimaMenstruacao, cicloMaisLongo)) {
-=======
-            if (searchService.isMenstruacao(data, ultimaMenstruacao)) {
-                status = "menstruacao";
-            } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao, cicloMCurto, cicloMLongo )) {
-                status = "periodo_fertil";
-            } else if (searchService.isOvulacao(data, ultimaMenstruacao, cicloMLongo)) {
->>>>>>> 1b11111a1dc4825814089594dbde480638c60977
                 status = "ovulacao";
             }
 
