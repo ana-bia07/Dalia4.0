@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +16,10 @@
     <div class="form-group lado_rigth">
         <h1 class="entrar">Entrar</h1>
     </div>
-    <form th:action="@{/RealizaLogin}" method="post">
+    <form action="/RealizaLogin" method="post">
         <div class="form-group">
-            <input type="email" class="form-control" name="email" th:value="*{email}" placeholder="Endereço de email" required>
-            <input type="password" class="form-control-password" name="password" th:value="*{password}" placeholder="Digite a senha" required>
+            <input type="email" class="form-control" name="email" placeholder="Endereço de email" required>
+            <input type="password" class="form-control-password" name="password" placeholder="Digite a senha" required>
             <label class="container">Lembrar Senha
                 <input type="checkbox" name="rememberMe">
                 <span class="checkmark"></span>
@@ -26,7 +27,7 @@
         </div>
         <div class="botoes">
             <button type="submit" class="botaoLogin">Login</button>
-            <a class="botaoCadastro" th:href="@{/cadastro}">Cadastre-se</a>
+            <a class="botaoCadastro" href="/cadastro">Cadastre-se</a>
         </div>
     </form>
     <div th:if="${error}" class="error-message">

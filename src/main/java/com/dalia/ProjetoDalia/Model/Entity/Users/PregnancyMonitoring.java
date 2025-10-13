@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,11 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class PregnancyMonitoring {
+
     private Boolean isPregnant;
     @Field(name = "dayPregnancy")
     private LocalDate dayPregnancy;
     private int gestationWeeks;
     @Field(name = "expectedBirthDate")
     private LocalDate expectedBirthDate;
-    private List<Consultation> consultations;
+    private List<String> consultations;
 }

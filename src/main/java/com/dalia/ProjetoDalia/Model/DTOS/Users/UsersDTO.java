@@ -1,8 +1,8 @@
 package com.dalia.ProjetoDalia.Model.DTOS.Users;
 
-import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Model.Entity.Users.PregnancyMonitoring;
 import com.dalia.ProjetoDalia.Model.Entity.Users.Search;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 
 
 public record UsersDTO(
@@ -14,7 +14,12 @@ public record UsersDTO(
         Search search,
         PregnancyMonitoring pregnancyMonitoring
 ) {
-    public UsersDTO(Comments.Users users){
+
+    public UsersDTO() {
+        this(null, "", "", "", "", null, null);
+    }
+
+    public UsersDTO(Users users){
         this(
                 users.getId(),
                 users.getName(),
@@ -26,10 +31,12 @@ public record UsersDTO(
         );
     }
 
-    public Comments.Users toEntity(){
-        Comments.Users user = new Comments.Users();
+
+    public Users toEntity(){
+        Users user = new Users();
         user.setId(this.id());
         user.setName(this.name());
+        user.setSurname(this.surname());
         user.setEmail(this.email());
         user.setPassword(this.password());
         user.setSearch(this.search());

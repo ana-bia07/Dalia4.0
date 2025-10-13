@@ -4,13 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calendário Menstrual - Dália</title>
-  <link rel="shortcut icon" type="image/png" th:href="@{/img/navbar/dália_secundario.png}" />
-  <link rel="stylesheet" th:href="@{/calendario/calendario.css}" />
+  <link rel="shortcut icon" type="image/png" href="/img/navbar/dália_secundario.png" />
+  <link rel="stylesheet" href="/calendario/calendario.css" />
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <script src="/calendario/calendario.js" defer></script>
 </head>
 <body>
 <header>
   <div class="logo">
-    <img th:src="@{/Home/img/navbar/Logo_dalia.png}" alt="Logo">
+    <img src="/Home/img/navbar/Logo_dalia.png" alt="Logo">
   </div>
   <nav>
     <ul>
@@ -39,65 +42,45 @@
 </header>
 
 <div class="calendar-section">
-    <h2>Seu Calendário Menstrual</h2>
+  <h2>Seu Calendário Menstrual</h2>
 
-    <div class="card-calendar">
-
-        <div id="btn-controls">
-            <button id="prev-month">&lt; Mês Anterior</button>
-            <span id="month-year" th:text="${nomeMes}">Junho de 2025</span>
-            <button id="next-month">Próximo Mês &gt;</button>
-        </div>
-
-        <div class="calendario">
-            <table class="calendario-tabela">
-                <thead>
-                <tr>
-                    <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr th:each="dia : ${diasDoMes}" th:if="${dia.isPrimeiraSemana()}">
-
-                    <td th:class="${dia.fase}">
-                        <span th:text="${dia.diaDoMes}">1</span>
-                        <span th:if="${dia.fase == 'menstruacao'}" class="fase-legenda">Menstruação</span>
-                        <span th:if="${dia.fase == 'fertil'}" class="fase-legenda">Fértil</span>
-                        <span th:if="${dia.fase == 'ovulacao'}" class="fase-legenda">Ovulação</span>
-                    </td>
-
-                </tr>
-                </tbody>
-            </table>
-        </div>
+  <div class="card-calendar">
+    <!-- Controles para mês e ano -->
+    <div id="btn-controls">
+      <button id="prev-month">&lt; Mês Anterior</button>
+      <span id="month-year"></span>
+      <button id="next-month">Próximo Mês &gt;</button>
     </div>
+    <div class="calendar">
+      <div id="calendar"></div>
+    </div>
+  </div>
 
-    <p id="proxima-menstruacao"></p>
-    <button id="registrar-menstruacao">Registrar Menstruação</button>
-    <button id="fim-menstruacao" style="display:none;">Fim da Menstruação</button>
+  <p id="proxima-menstruacao"></p>
+  <button id="registrar-menstruacao">Registrar Menstruação</button>
+  <button id="fim-menstruacao" style="display:none;">Fim da Menstruação</button>
 </div>
 
 <div class="explicacao">
-    <h3>Entendendo seu Ciclo</h3>
-    <div class="callendar__explanation">
-        <div class="callendar__explanation__title">
-            <div class="menstruacao-sample"></div><strong>Menstruação:</strong>
-        </div>
-        <p class="menstruacao">Os dias em vermelho indicam seu período menstrual.</p>
+  <h3>Entendendo seu Ciclo</h3>
+  <div class="callendar__explanation">
+    <div class="callendar__explanation__title">
+      <div class="menstruacao-sample"></div><strong>Menstruação:</strong>
     </div>
-    <div class="callendar__explanation">
-        <div class="callendar__explanation__title">
-            <div class="fertil-sample"></div><strong>Dias Férteis:</strong>
-        </div>
-        <p class="fertil">Os dias em azul indicam seu período fértil, quando há maior chance de engravidar.</p>
+    <p class="menstruacao">Os dias em vermelho indicam seu período menstrual.</p>
+  </div>
+  <div class="callendar__explanation">
+    <div class="callendar__explanation__title">
+      <div class="fertil-sample"></div><strong>Dias Férteis:</strong>
     </div>
-    <div class="callendar__explanation">
-        <div class="callendar__explanation__title">
-            <div class="ovulacao-sample"></div><strong>Ovulação:</strong>
-        </div>
-        <p class="ovulacao">O dia em verde indica sua ovulação, o dia mais fértil do ciclo.</p>
+    <p class="fertil">Os dias em azul indicam seu período fértil, quando há maior chance de engravidar.</p>
+  </div>
+  <div class="callendar__explanation">
+    <div class="callendar__explanation__title">
+      <div class="ovulacao-sample"></div><strong>Ovulação:</strong>
     </div>
+    <p class="ovulacao">O dia em verde indica sua ovulação, o dia mais fértil do ciclo.</p>
+  </div>
 </div>
 </body>
 </html>

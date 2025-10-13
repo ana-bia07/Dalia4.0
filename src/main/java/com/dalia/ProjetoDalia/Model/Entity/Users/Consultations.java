@@ -10,7 +10,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Consultation {
+public class Consultations {
     @Field(name = "date")
     private Instant date;
     private String observations;

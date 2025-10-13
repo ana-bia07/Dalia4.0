@@ -1,9 +1,9 @@
 package com.dalia.ProjetoDalia.Controller;
 
-import com.dalia.ProjetoDalia.Model.DTOS.Users.PregnancyMonitoringDTO;
 import com.dalia.ProjetoDalia.Model.DTOS.Users.UsersDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Model.Entity.Users.PregnancyMonitoring;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import jakarta.servlet.http.HttpSession;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @Controller
 @AllArgsConstructor
 public class GravidezController {
-    private final UsersServices usersService;
+    private final UsersServices usersServices;
     private final UsersRepository usersRepository;
 
     @GetMapping("/Gravidez/pesquisa")
@@ -36,26 +36,21 @@ public class GravidezController {
     }
 
     @PostMapping("/salvar-pesquisa")
-    public String salvarPesquisa(@ModelAttribute("pregnancyMonitoring") PregnancyMonitoringDTO pregnancyMonitoring, HttpSession session) {
-        String idUser = (String) session.getAttribute("idUser");
-        if (idUser == null) {
-            return "redirect:/login";
-        }
-
-        Optional<UsersDTO> userOpt = usersService.getUserById(idUser);
+    public String salvarPesquisa(@ModelAttribute("pregnancyMonitoring") PregnancyMonitoring pregnancyMonitoring, @RequestParam String idUser){
+        System.out.println("ID RECEBIDO:" + idUser);
+        Optional<Users> userOpt = usersRepository.findById(idUser);
         if(userOpt.isPresent()) {
-            Comments.Users existingUser = userOpt.get().toEntity();
+            Users existUser = userOpt.get();
             UsersDTO dto = new UsersDTO(
-                    existingUser.getId(),
-                    existingUser.getName(),
-                    existingUser.getSurname(),
-                    existingUser.getEmail(),
-                    existingUser.getPassword(),
-                    existingUser.getSearch(),
-                    pregnancyMonitoring.toEntity()
+                    existUser.getId(),
+                    existUser.getName(),
+                    existUser.getSurname(),
+                    existUser.getEmail(),
+                    existUser.getPassword(),
+                    existUser.getSearch(),
+                    pregnancyMonitoring
             );
-            usersService.updateUser(idUser, dto);
-            session.setAttribute("pregnancy", pregnancyMonitoring);
+            usersServices.updateUser(idUser, dto);
         }
         return "redirect:/homeGravidez";
     }

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dália Home</title>
-    <link rel="stylesheet" th:href="@{/Home/style.css}">
-    <link rel="shortcut icon" type="imagex/png" th:href="@{../static/Home/img/navbar/dália_secundario.png}">
+    <link rel="stylesheet" href="/Home/style.css">
+    <link rel="shortcut icon" type="imagex/png" href="../static/Home/img/navbar/dália_secundario.png">
 </head>
 <body data-userid="${user.id}">
 
 <header>
     <div class="logo">
-        <img th:src="@{/Home/img/navbar/Logo_dalia.png}" alt="Logo">
+        <img src="/Home/img/navbar/Logo_dalia.png" alt="Logo">
     </div>
     <nav>
         <ul>
             <li class="Home">
-                <a th:href="@{/home}"><img th:src="@{/Home/img/navbar/Home-full__nav.svg}" alt="Início"></a>
+                <a href="/home"><img src="/Home/img/navbar/Home-full__nav.svg" alt="Início"></a>
                 <span class="legenda">HomePage</span>
             </li>
             <li class="Calendario">
-                <a th:href="@{/calendar}"><img th:src="@{/Home/img/navbar/Calendar__nav.svg}" alt="Calendário"></a>
+                <a href="/calendar"><img src="/Home/img/navbar/Calendar__nav.svg" alt="Calendário"></a>
                 <span class="legenda">Calendário</span>
             </li>
             <li class="forum">

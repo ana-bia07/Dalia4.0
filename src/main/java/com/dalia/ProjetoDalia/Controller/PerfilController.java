@@ -4,6 +4,7 @@ import com.dalia.ProjetoDalia.Model.DTOS.Users.PregnancyMonitoringDTO;
 import com.dalia.ProjetoDalia.Model.DTOS.Users.UsersDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Users.Search;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.EmailService;
 import com.dalia.ProjetoDalia.Services.Users.PregnancyMonitoringService;
@@ -42,9 +43,9 @@ public class PerfilController {
         }
         model.addAttribute("modoAtual", modo);
 
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUser);
+        Optional<Users> userOpt = usersRepository.findById(idUser);
         if (userOpt.isPresent()) {
-            Comments.Users user = userOpt.get();
+            Users user = userOpt.get();
             if (user.getSearch() == null) user.setSearch(new Search());
             UsersDTO dto = new UsersDTO(user);
             model.addAttribute("userDTO", dto);
@@ -61,9 +62,9 @@ public class PerfilController {
             return "redirect:/login";
         }
 
-        Optional<Comments.Users> userOriginalOpt = usersRepository.findById(idUser);
+        Optional<Users> userOriginalOpt = usersRepository.findById(idUser);
         if (userOriginalOpt.isPresent()) {
-            Comments.Users user = userOriginalOpt.get();
+            Users user = userOriginalOpt.get();
 
             user.setName(userDTO.name());
             user.setSurname(userDTO.surname());
