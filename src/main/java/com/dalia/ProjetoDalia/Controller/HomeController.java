@@ -1,11 +1,14 @@
 package com.dalia.ProjetoDalia.Controller;
 
 import com.dalia.ProjetoDalia.Model.DTOS.Users.SearchDTO;
+import com.dalia.ProjetoDalia.Model.DTOS.Users.UsersDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Services.Users.SearchService;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import com.mongodb.lang.Nullable;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +32,9 @@ public class HomeController {
             return "index";
         }
 
-        Comments.Users usuario = userService.getByEmail(principal.getName())
+        UsersDTO usuario = userService.getByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        model.addAttribute("userId", usuario.getId());
+        model.addAttribute("userId", usuario.id());
         return "index";
     }
 
@@ -44,8 +47,10 @@ public class HomeController {
         }
 
         SearchDTO search = searchOpt.get();
-        LocalDate ultimaMenstruacao = search.toEntity().getLastMenstruationDay();
-        int ciclo = search.toEntity().getCycleDuration();
+        LocalDate ultimaMenstruacao = search.lastMenstruationDay();
+        int ciclo = search.cycleDuration();
+        int cicloMaisCurto = search.minCycleDuration();
+        int cicloMaisLongo = search.maxCycleDuration();
 
         LocalDate hoje = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -54,18 +59,18 @@ public class HomeController {
 
         for (int offset = -2; offset <= 2; offset++) {
             LocalDate data = hoje.plusDays(offset);
-
             String status = null;
-            if (searchService.isMenstruacao(data, ultimaMenstruacao, ciclo)) {
+
+            if (searchService.isMenstruacao(data, ultimaMenstruacao)) {
                 status = "menstruacao";
-            } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao)) {
+            } else if (searchService.isPeriodoFertil(data, ultimaMenstruacao, cicloMaisCurto, cicloMaisLongo)) {
                 status = "periodo_fertil";
-            } else if (searchService.isOvulacao(data, ultimaMenstruacao)) {
+            } else if (searchService.isOvulacao(data, ultimaMenstruacao, cicloMaisLongo)) {
                 status = "ovulacao";
             }
 
             Map<String, String> evento = new HashMap<>();
-            evento.put("data", data.format(formatter)); // Garantido: yyyy-MM-dd
+            evento.put("data", data.format(formatter));
             if (status != null) {
                 evento.put("status", status);
             }

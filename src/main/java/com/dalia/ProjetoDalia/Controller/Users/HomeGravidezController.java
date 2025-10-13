@@ -1,4 +1,4 @@
-package com.dalia.ProjetoDalia.Controller;
+package com.dalia.ProjetoDalia.Controller.Users;
 
 import com.dalia.ProjetoDalia.Model.DTOS.Users.PregnancyMonitoringDTO;
 import com.dalia.ProjetoDalia.Services.Users.PregnancyMonitoringService;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/Gravidez")
 public class HomeGravidezController {
 
     private final PregnancyMonitoringService pregnancyService;
@@ -25,13 +25,15 @@ public class HomeGravidezController {
             return "redirect:/login";
         }
 
-        PregnancyMonitoringDTO dto = pregnancyService.getPregnancyByIdUser(idUser).orElse(new PregnancyMonitoringDTO());
+        PregnancyMonitoringDTO dto = pregnancyService.getPregnancyByIdUser(idUser)
+                .orElse(new PregnancyMonitoringDTO());
+
         model.addAttribute("pregnancy", dto);
         model.addAttribute("idUser", idUser);
 
-        // Para mostrar a lista de consultas como string separada por vírgulas (para formulário)
-        if (dto.getConsultations() != null && !dto.getConsultations().wait()) {
-            String consultationsString = String.join(", ", dto.getConsultations());
+        // Converter lista de consultas em string
+        if (dto.consultations() != null && !dto.consultations().isEmpty()) {
+            String consultationsString = String.join(", ", dto.consultations());
             model.addAttribute("consultationsString", consultationsString);
         } else {
             model.addAttribute("consultationsString", "");
@@ -46,17 +48,22 @@ public class HomeGravidezController {
             @ModelAttribute("pregnancy") PregnancyMonitoringDTO dto,
             @RequestParam(value = "consultationsString", required = false) String consultationsString) {
 
-        // Converte string separada por vírgulas para List<String>
-        if (consultationsString != null && !consultationsString.isBlank()) {
-            List<String> consultations = Arrays.stream(consultationsString.split(","))
-                    .map(String::trim)
-                    .toList();
-            dto.setConsultations(consultations);
-        } else {
-            dto.setConsultations(List.of());
-        }
+        List<String> consultations = (consultationsString != null && !consultationsString.isBlank())
+                ? Arrays.stream(consultationsString.split(","))
+                .map(String::trim)
+                .toList()
+                : List.of();
 
-        pregnancyService.updatePregnancy(idUser, dto);
+        // Criar novo DTO com as consultas incluídas
+        PregnancyMonitoringDTO updatedDto = new PregnancyMonitoringDTO(
+                dto.isPregnant(),
+                dto.dayPregnancy(),
+                dto.gestationWeeks(),
+                dto.expectedBirthDate(),
+                consultations
+        );
+
+        pregnancyService.updatePregnancy(idUser, updatedDto);
 
         return "redirect:/Gravidez/homeGravidez";
     }

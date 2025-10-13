@@ -3,6 +3,7 @@ package com.dalia.ProjetoDalia.Services.Users;
 import com.dalia.ProjetoDalia.Model.DTOS.Users.PregnancyMonitoringDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Model.Entity.Users.PregnancyMonitoring;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Interface.IPregnancyMonitoringService;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,10 @@ public class PregnancyMonitoringService implements IPregnancyMonitoringService {
 
     @Override
     public String createPregnancyMonitoring(String idUser, PregnancyMonitoringDTO dto) {
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUser);
+        Optional<Users> userOpt = usersRepository.findById(idUser);
         if (userOpt.isEmpty()) return "Usuário não encontrado";
 
-        Comments.Users user = userOpt.get();
+        Users user = userOpt.get();
         PregnancyMonitoring pregnancyMonitoring = dto.toEntity();
 
         user.setPregnancyMonitoring(pregnancyMonitoring);
@@ -33,7 +34,7 @@ public class PregnancyMonitoringService implements IPregnancyMonitoringService {
     @Override
     public Optional<PregnancyMonitoringDTO> getPregnancyByIdUser(String idUser) {
         return usersRepository.findById(idUser)
-                .map(Comments.Users::getPregnancyMonitoring)
+                .map(Users::getPregnancyMonitoring)
                 .map(pregnancyMonitoring -> new PregnancyMonitoringDTO(
                         pregnancyMonitoring.getIsPregnant(),
                         pregnancyMonitoring.getDayPregnancy(),
@@ -45,10 +46,10 @@ public class PregnancyMonitoringService implements IPregnancyMonitoringService {
 
     @Override
     public Optional<PregnancyMonitoringDTO> updatePregnancy(String idUsers, PregnancyMonitoringDTO dto) {
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUsers);
+        Optional<Users> userOpt = usersRepository.findById(idUsers);
         if (userOpt.isEmpty()) return Optional.empty();
 
-        Comments.Users user = userOpt.get();
+        Users user = userOpt.get();
         user.setPregnancyMonitoring(dto.toEntity());
         usersRepository.save(user);
 
@@ -56,7 +57,7 @@ public class PregnancyMonitoringService implements IPregnancyMonitoringService {
     }
     @Override
     public void deletePregnancy(String idUser) {
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUser);
+        Optional<Users> userOpt = usersRepository.findById(idUser);
         userOpt.ifPresent(user -> {
             user.setPregnancyMonitoring(null);
             usersRepository.save(user);

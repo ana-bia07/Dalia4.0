@@ -2,6 +2,7 @@ package com.dalia.ProjetoDalia.Services.Users;
 
 import com.dalia.ProjetoDalia.Model.DTOS.Users.UsersDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Interface.IUsersService;
 import org.springframework.stereotype.Service;
@@ -26,17 +27,17 @@ public class UsersServices implements IUsersService{
     }
     @Override
     public Optional<UsersDTO> getUserById(String id) {
-        Optional<Comments.Users> userEntity = usersRepository.findById(id);
+        Optional<Users> userEntity = usersRepository.findById(id);
         return userEntity.map(UsersDTO::new);
     }
 
     @Override
     public Optional<UsersDTO> updateUser(String id, UsersDTO usersDTO) {
-        Optional<Comments.Users> existingUserOpt = usersRepository.findById(id);
+        Optional<Users> existingUserOpt = usersRepository.findById(id);
 
         return existingUserOpt.map(existingUser -> {
             updateUserFields(existingUser, usersDTO);
-            Comments.Users updatedUser = usersRepository.save(usersDTO.toEntity());
+            Users updatedUser = usersRepository.save(usersDTO.toEntity());
             return new UsersDTO(updatedUser);
         });
     }
@@ -47,11 +48,11 @@ public class UsersServices implements IUsersService{
     }
 
     public Optional<UsersDTO> getByEmail(String email) {
-        Optional<Comments.Users> userEntity = usersRepository.findByEmail(email);
+        Optional<Users> userEntity = usersRepository.findByEmail(email);
         return userEntity.map(UsersDTO::new);
     }
 
-    private Optional<Comments.Users> updateUserFields(Comments.Users existingUser, UsersDTO usersDTO) {
+    private Optional<Users> updateUserFields(Users existingUser, UsersDTO usersDTO) {
         if (StringUtils.hasText(usersDTO.id())) existingUser.setId(usersDTO.id());
         if (StringUtils.hasText(usersDTO.name())) existingUser.setName(usersDTO.name());
         if (StringUtils.hasText(usersDTO.surname())) existingUser.setSurname(usersDTO.surname());

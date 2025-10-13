@@ -1,19 +1,20 @@
 package com.dalia.ProjetoDalia.Model.Repository;
 
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UsersRepository extends MongoRepository<Comments.Users, String> {
+public interface UsersRepository extends MongoRepository<Users, String> {
 
-    Optional<Comments.Users> findByEmail(String email);
+    Optional<Users> findByEmail(String email);
 
-    Optional<Comments.Users> findByUsername(String username);
+    Optional<Users> findByName(String name);
 
-    Optional<Comments.Users> findById(String id);
+    Optional<Users> findById(String id);
 }
 
 

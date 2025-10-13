@@ -3,6 +3,7 @@ package com.dalia.ProjetoDalia.Controller;
 import com.dalia.ProjetoDalia.Model.DTOS.Users.UsersDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Model.Entity.Users.PregnancyMonitoring;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import jakarta.servlet.http.HttpSession;
@@ -37,15 +38,15 @@ public class GravidezController {
     @PostMapping("/salvar-pesquisa")
     public String salvarPesquisa(@ModelAttribute("pregnancyMonitoring") PregnancyMonitoring pregnancyMonitoring, @RequestParam String idUser){
         System.out.println("ID RECEBIDO:" + idUser);
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUser);
+        Optional<Users> userOpt = usersRepository.findById(idUser);
         if(userOpt.isPresent()) {
-            Comments.Users existUser = userOpt.get();
+            Users existUser = userOpt.get();
             UsersDTO dto = new UsersDTO(
+                    existUser.getId(),
                     existUser.getName(),
                     existUser.getSurname(),
                     existUser.getEmail(),
                     existUser.getPassword(),
-                    existUser.getBirthDate(),
                     existUser.getSearch(),
                     pregnancyMonitoring
             );

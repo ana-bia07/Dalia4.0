@@ -5,6 +5,7 @@ import com.dalia.ProjetoDalia.Model.DTOS.Users.UsersDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Model.Entity.Users.PregnancyMonitoring;
 import com.dalia.ProjetoDalia.Model.Entity.Users.Search;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,12 +32,13 @@ public class UsersController {
     }
 
     @GetMapping("/cadastro")
-    public String cadastro() {
+    public String cadastro(Model model) {
+        model.addAttribute("users", new UsersDTO(null, null, null, null, null, null, null));
         return "cadastro";
     }
 
 
-    @PostMapping("/criaUsuario")
+    @PostMapping("/criarUsuario")
     @Operation(summary = "Cria um usuário", description = "Rota para criar um usuário via formulário HTML")
     public String createUserForm(@ModelAttribute("users") UsersDTO user, @RequestParam(required = false) String passconfirmation, HttpSession session ,Model model) {
         if (!user.password().equals(passconfirmation)) {
@@ -65,7 +67,7 @@ public class UsersController {
     public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession Session) {
         Optional<UsersDTO> optionalUser = usersService.getUserById(email);
         if (optionalUser.isPresent()) {
-            Comments.Users user = optionalUser.get().toEntity();
+            Users user = optionalUser.get().toEntity();
             if (user.getPassword().equals(password)) {
                 Session.setAttribute("idUser", user.getId());
                 model.addAttribute("user", user);
@@ -98,7 +100,7 @@ public class UsersController {
 
         Optional<UsersDTO> userOpt = usersService.getUserById(idUser);
         if (userOpt.isPresent()) {
-            Comments.Users existingUser = userOpt.get().toEntity();
+            Users existingUser = userOpt.get().toEntity();
             UsersDTO dto = new UsersDTO(
                     existingUser.getId(),
                     existingUser.getName(),

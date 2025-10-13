@@ -4,6 +4,7 @@ import com.dalia.ProjetoDalia.Model.DTOS.Users.SearchDTO;
 import com.dalia.ProjetoDalia.Model.DTOS.Users.UserCycleDataDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Users.Search;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
+import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
 import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Interface.ISearchService;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,10 @@ public class SearchService implements ISearchService {
 
     @Override
     public String createSearch(String idUsers, SearchDTO searchData) {
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUsers);
+        Optional<Users> userOpt = usersRepository.findById(idUsers);
         if (userOpt.isEmpty()) return "Usuário não encontrado";
 
-        Comments.Users user = userOpt.get();
+        Users user = userOpt.get();
         Search search = searchData.toEntity();
 
         search.getCycleHistory().add(search.getCycleDuration());
@@ -39,10 +40,10 @@ public class SearchService implements ISearchService {
 
     @Override
     public Optional<SearchDTO> updateSearch(String idUsers, SearchDTO searchData) {
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUsers);
+        Optional<Users> userOpt = usersRepository.findById(idUsers);
         if (userOpt.isEmpty()) return Optional.empty();
 
-        Comments.Users user = userOpt.get();
+        Users user = userOpt.get();
         Search search = user.getSearch();
 
         if (search != null) {
@@ -68,10 +69,10 @@ public class SearchService implements ISearchService {
 
     @Override
     public boolean deleteSearch(String idUsers) {
-        Optional<Comments.Users> userOpt = usersRepository.findById(idUsers);
+        Optional<Users> userOpt = usersRepository.findById(idUsers);
         if (userOpt.isEmpty()) return false;
 
-        Comments.Users user = userOpt.get();
+        Users user = userOpt.get();
         user.setSearch(null);
         usersRepository.save(user);
 
@@ -81,7 +82,7 @@ public class SearchService implements ISearchService {
     @Override
     public Optional<SearchDTO> getSearchByIdUsers(String idUsers) {
         return usersRepository.findById(idUsers)
-                .map(Comments.Users::getSearch)
+                .map(Users::getSearch)
                 .map(search -> new SearchDTO(
                         search.getAge(),
                         search.isRegularMenstruation(),
@@ -100,7 +101,7 @@ public class SearchService implements ISearchService {
 
     public Optional<UserCycleDataDTO> getUserCycleData(String userId) {
         return usersRepository.findById(userId)
-                .map(Comments.Users::getSearch)
+                .map(Users::getSearch)
                 .filter(Objects::nonNull) // Garante que o objeto search existe
                 .map(search -> {
                     Integer min = search.getMinCycleDuration();
