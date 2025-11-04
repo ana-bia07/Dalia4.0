@@ -30,7 +30,6 @@ public class HomeGravidezController {
 
         model.addAttribute("pregnancy", dto);
         model.addAttribute("idUser", idUser);
-
         // Converter lista de consultas em string
         if (dto.consultations() != null && !dto.consultations().isEmpty()) {
             String consultationsString = String.join(", ", dto.consultations());

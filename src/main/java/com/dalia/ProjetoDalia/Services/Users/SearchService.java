@@ -5,6 +5,7 @@ import com.dalia.ProjetoDalia.Model.DTOS.Users.UserCycleDataDTO;
 import com.dalia.ProjetoDalia.Model.Entity.Users.Search;
 import com.dalia.ProjetoDalia.Model.Entity.Comments;
 import com.dalia.ProjetoDalia.Model.Entity.Users.Users;
+import com.dalia.ProjetoDalia.Model.Repository.SearchRepository;
 import com.dalia.ProjetoDalia.Model.Repository.UsersRepository;
 import com.dalia.ProjetoDalia.Services.Interface.ISearchService;
 import lombok.RequiredArgsConstructor;
@@ -19,53 +20,56 @@ import java.util.*;
 public class SearchService implements ISearchService {
 
     private final UsersRepository usersRepository;
+    private final SearchRepository SearchRepository;
 
-    @Override
-    public String createSearch(String idUsers, SearchDTO searchData) {
-        Optional<Users> userOpt = usersRepository.findById(idUsers);
-        if (userOpt.isEmpty()) return "Usuário não encontrado";
-
-        Users user = userOpt.get();
-        Search search = searchData.toEntity();
-
-        search.getCycleHistory().add(search.getCycleDuration());
-        search.setMaxCycleDuration(search.getMaxCycleDuration());
-        search.setMinCycleDuration(search.getMinCycleDuration());
-
-        user.setSearch(search);
-        usersRepository.save(user);
-
-        return "Search cadastrada com sucesso para o usuário " + idUsers;
-    }
-
-    @Override
-    public Optional<SearchDTO> updateSearch(String idUsers, SearchDTO searchData) {
-        Optional<Users> userOpt = usersRepository.findById(idUsers);
+    public Optional<SearchDTO> saveOrUpdateSearchForUser(String userId, SearchDTO searchDTO) {
+        Optional<Users> userOpt = usersRepository.findById(userId);
         if (userOpt.isEmpty()) return Optional.empty();
 
         Users user = userOpt.get();
         Search search = user.getSearch();
 
-        if (search != null) {
-            if(!search.getLastMenstruationDay().isEqual(searchData.lastMenstruationDay())){
-                int newCycleDuration = (int) ChronoUnit.DAYS.between(search.getLastMenstruationDay(), searchData.lastMenstruationDay());
-                search.getCycleHistory().add(newCycleDuration);
+        // Se o usuário ainda não tiver pesquisa, cria uma nova
+        if (search == null) {
+            search = searchDTO.toEntity();
+        } else {
+            // Atualiza os campos existentes
+            search.setAge(searchDTO.age());
+            search.setRegularMenstruation(searchDTO.regularMenstruation());
+            search.setUseContraceptive(searchDTO.useContraceptive());
+            search.setContraceptiveType(searchDTO.contraceptiveType());
+            search.setLastMenstruationDay(searchDTO.lastMenstruationDay());
+            search.setCycleDuration(searchDTO.cycleDuration());
+            search.setMenstruationDuration(searchDTO.menstruationDuration());
 
-                search.setMaxCycleDuration(Collections.min(search.getCycleHistory()));
-                search.setMinCycleDuration(Collections.min(search.getCycleHistory()));
+            // Atualiza histórico
+            if (search.getCycleHistory() == null) {
+                search.setCycleHistory(new ArrayList<>());
             }
+            search.getCycleHistory().add(searchDTO.cycleDuration());
         }
 
-        search.setUseContraceptive(searchData.useContraceptive());
-        search.setContraceptiveType(searchData.contraceptiveType());
-        search.setLastMenstruationDay(searchData.lastMenstruationDay());
-        search.setCycleDuration(searchData.cycleDuration());
-        search.setMenstruationDuration(searchData.menstruationDuration());
+        // Salva a pesquisa no Mongo
+        Search savedSearch = SearchRepository.save(search);
 
+        // Vincula ao usuário e salva
+        user.setSearch(savedSearch);
         usersRepository.save(user);
 
-        return Optional.of(searchData);
+        return Optional.of(new SearchDTO(
+                savedSearch.getAge(),
+                savedSearch.isRegularMenstruation(),
+                savedSearch.isUseContraceptive(),
+                savedSearch.getContraceptiveType(),
+                savedSearch.getLastMenstruationDay(),
+                savedSearch.getCycleDuration(),
+                savedSearch.getMenstruationDuration(),
+                savedSearch.getCycleHistory(),
+                savedSearch.getMinCycleDuration(),
+                savedSearch.getMaxCycleDuration()
+        ));
     }
+
 
     @Override
     public boolean deleteSearch(String idUsers) {

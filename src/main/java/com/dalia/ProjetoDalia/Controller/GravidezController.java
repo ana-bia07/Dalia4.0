@@ -52,6 +52,6 @@ public class GravidezController {
             );
             usersServices.updateUser(idUser, dto);
         }
-        return "redirect:/homeGravidez";
+        return "redirect:/Gravidez/homeGravidez";
     }
 }
