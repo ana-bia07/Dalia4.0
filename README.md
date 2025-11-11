@@ -39,8 +39,8 @@ Este projeto está alinhado com os seguintes Objetivos de Desenvolvimento Susten
 ## 👥 Autores
 
 - [@Ana](https://github.com/ana-bia07)
-- [@Diovanni](https://github.com/)
-- [@Guilherme](https://github.com/GuilhermeSouza198)
+- [@Diovanni](https://github.com/DiovanniLS)
+- [@Guilherme](https://github.com/GuilhermeSouza539)
 - [@Natali](https://github.com/nouveauromance)
 - [@Rayane](https://github.com/RayaneBarrosM)
 - [@Felipe](https://github.com/FelipeLan)
