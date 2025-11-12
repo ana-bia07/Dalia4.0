@@ -99,41 +99,143 @@
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("JS EM ADAEMNETJOJTGAT");
 
-  document.addEventListener("DOMContentLoaded", () => {
-    console.log("JS EM ADAEMNETJOJTGAT")
-    flatpickr("#dayPregnancy", { dateFormat: "Y-m-d" });
-    flatpickr("#expectedBirthDate", { dateFormat: "Y-m-d" });
-  });
+        // Inicialização do Flatpickr
+        flatpickr("#dayPregnancy", { dateFormat: "Y-m-d" });
+        flatpickr("#expectedBirthDate", { dateFormat: "Y-m-d" });
 
-    const sections = document.querySelectorAll(".section");
-    let current = [...sections].findIndex(sec => sec.classList.contains("active"));
+        const sections = document.querySelectorAll(".section");
+        let current = [...sections].findIndex(sec => sec.classList.contains("active"));
 
-    function showSection(index) {
-      sections.forEach((sec, i) => {
-        sec.classList.remove("active");
-      });
-      sections[index].classList.add("active");
-      current = index;
-    }
-
-    document.querySelectorAll(".proximo").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (current < sections.length - 1) {
-          let next = current + 1;
-          showSection(next);
+        // Garante que a primeira seção seja a ativa se nenhuma for encontrada
+        if (current === -1 && sections.length > 0) {
+            current = 0;
+            sections[current].classList.add("active");
         }
-      });
-    });
 
-    document.querySelectorAll(".volta").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (current > 0) {
-          showSection(current - 1);
+        function showSection(index) {
+            sections.forEach((sec, i) => {
+                sec.classList.remove("active");
+            });
+            sections[index].classList.add("active");
+            current = index;
         }
-      });
-    });
 
+        // Função auxiliar para exibir/ocultar erros
+        function displayError(inputField, message, show) {
+            let errorSpan = inputField.nextElementSibling;
+            if (!errorSpan || !errorSpan.classList.contains('error-message')) {
+                // Cria o span de erro se não existir
+                errorSpan = document.createElement('span');
+                errorSpan.classList.add('error-message');
+                errorSpan.style.color = 'red';
+                errorSpan.style.display = 'block';
+                inputField.parentNode.insertBefore(errorSpan, inputField.nextSibling);
+            }
+
+            errorSpan.textContent = message;
+            errorSpan.style.display = show ? 'block' : 'none';
+
+            if (show) {
+                inputField.classList.add('input-error');
+                inputField.focus();
+            } else {
+                inputField.classList.remove('input-error');
+            }
+        }
+
+        // Remove todos os erros ao mudar o input (melhor UX)
+        sections.forEach(sec => {
+            const inputs = sec.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    displayError(input, '', false);
+                });
+            });
+        });
+
+
+        document.querySelectorAll(".proximo").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const currentSectionElement = sections[current];
+                let shouldProceed = true;
+                let next = current + 1;
+
+                // --- VALIDAÇÕES E LÓGICA DE NAVEGAÇÃO ---
+
+                // SECTION 1: Redirecionamento se 'Não está grávida'
+                if (currentSectionElement.id === "section1") {
+                    const selected = currentSectionElement.querySelector('input[name="isPregnant"]:checked');
+
+                    if (!selected) {
+                        // Erro: Nada selecionado (Apenas se o botão Avançar estiver na seção)
+                        shouldProceed = false;
+                        alert("Por favor, selecione 'Sim' ou 'Não'."); // Alerta simples para rádio
+                    } else if (selected.value === "false") {
+                        // Se 'Não', redireciona
+                        window.location.href = '/home';
+                        shouldProceed = false; // Impede o avanço do showSection
+                        return; // Sai da função de clique
+                    }
+                }
+
+                // SECTION 2: Validação da Data da Gestação
+                if (currentSectionElement.id === "section2") {
+                    const inputField = document.getElementById('dayPregnancy');
+                    if (!inputField || !inputField.value) {
+                        shouldProceed = false;
+                        displayError(inputField, "Por favor, insira a data da gestação.", true);
+                    } else {
+                        displayError(inputField, '', false);
+                    }
+                }
+
+                // SECTION 3: Validação das Semanas de Gestação
+                if (currentSectionElement.id === "section3") {
+                    // Aqui, usamos o seletor para encontrar o input field na seção 3
+                    const inputField = currentSectionElement.querySelector('input[type="number"]');
+                    const value = parseInt(inputField ? inputField.value : NaN);
+                    const min = 1;
+                    const max = 43; // Baseado no seu HTML
+
+                    if (isNaN(value) || value < min || value > max) {
+                        shouldProceed = false;
+                        displayError(inputField, `Por favor, insira o número de semanas (entre ${min} e ${max}).`, true);
+                    } else {
+                        displayError(inputField, '', false);
+                    }
+                }
+
+                // SECTION 4: Validação da Data de Nascimento Esperada
+                if (currentSectionElement.id === "section4") {
+                    const inputField = document.getElementById('expectedBirthDate');
+                    if (!inputField || !inputField.value) {
+                        shouldProceed = false;
+                        displayError(inputField, "Por favor, insira a data de nascimento esperada.", true);
+                    } else {
+                        displayError(inputField, '', false);
+                    }
+                }
+
+                // --- FIM DAS VALIDAÇÕES ---
+
+                // Avança APENAS se a validação passou E não for a última seção
+                if (shouldProceed && current < sections.length - 1) {
+                    showSection(next);
+                }
+            });
+        });
+
+        document.querySelectorAll(".volta").forEach(btn => {
+            btn.addEventListener("click", () => {
+                if (current > 0) {
+                    showSection(current - 1);
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

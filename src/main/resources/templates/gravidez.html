@@ -1,209 +1,129 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Gravidez</title>
-    <link rel="stylesheet" th:href="@{/HomeGravidez/homeGravidezStyle.css}" />
-    <script type="module" th:src="@{https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js}"></script>
-    <script th:src="@{global-darkmode.js}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/homeG/homeG.css}">
 </head>
+
 <body>
-<header>
-    <div class="logo">
-        <img src="/Home/img/navbar/Logo_dalia.png" alt="Logo">
+<section id="hero" class="hero-section">
+    <header class="site-header">
+        <nav class="main-nav">
+            <a href="/home"><img th:src="@{/homeM(parte1)/img/home.svg}" alt="Home"></a>
+            <a href="/calendar"><img th:src="@{/homeM(parte1)/img/calendario.svg}" alt="Calendário"></a>
+            <a href="/Emocoes/emocoes.html"><img th:src="@{/homeM(parte1)/img/registro.svg}" alt="Registro Diário"></a>
+            <a href="/posts"><img th:src="@{/homeM(parte1)/img/chat.svg}" alt="Forum"></a>
+            <a href="/perfil"><img th:src="@{/homeM(parte1)/img/perfil.svg}" alt="Perfil"></a>
+        </nav>
+    </header>
+</section>
+
+<section id="health-info" class="health-info-section">
+    <div class="container">
+        <h2 class="section-title">Sobre a sua saúde e a do seu bebê:</h2>
+        <div class="health-buttons">
+            <a href="#" class="health-btn">Caderneta de Vacinação</a>
+            <a href="#" class="health-btn">Mudanças no Corpo</a>
+            <a href="#" class="health-btn">Alimentação</a>
+        </div>
     </div>
-    <nav>
-        <ul>
-            <li class="Home">
-                <a href="/Gravidez/homeGravidez"><img src="/Home/img/navbar/Home-full__nav.svg" alt="Início"></a>
-                <span class="legenda">HomePage</span>
-            </li>
-            <li class="Calendario">
-                <a href="/calendar"><img src="/Home/img/navbar/Calendar__nav.svg" alt="Calendário"></a>
-                <span class="legenda">Calendário</span>
-            </li>
-            <li class="forum">
-                <a href="/posts"><img src="/Home/img/navbar/Fórum__nav.svg" alt="Comunidade"></a>
-                <span class="legenda">Fórum</span>
-            </li>
-            <li class="principal">
-                <a href="../Emocoes/emocoes.html"><img src="/Home/img/navbar/Flower__nav.svg" alt="Emoções"></a>
-                <span class="legenda">Emoções</span>
-            </li>
-            <li class="perfil">
-                <a href="/perfil"><img src="/Home/img/navbar/Perfil__nav.svg" alt="Perfil"></a>
-                <span class="legenda">Perfil</span>
-            </li>
-        </ul>
-    </nav>
-</header>
+</section>
 
-<main>
-    <section class="banner">
-        <model-viewer
-                id="bebe"
-                th:src="@{/HomeGravidez/modelo3d/fetus.glb}"
-                autoplay
-                camera-controls
-                disable-zoom
-                auto-rotate
-                alt="Modelo 3D do bebê"
-                shadow-intensity="1"
-                environment-image="neutral"
-                style="width: 100%; height: 500px;">
-        </model-viewer>
-    </section>
+<section id="daily-record" class="daily-record-section">
+    <div class="text-content">
+        <h2>Registro Diário</h2>
+        <p>Informações necessárias para o acompanhamento.</p>
+    </div>
 
-    <section class="saude">
-        <h1>Sobre a sua saúde e a do seu bebê</h1>
-        <div class="botoes-saude">
-            <button class="button-saude">Cadernos de Vacinação</button>
-            <button class="button-saude">Mudanças no Corpo</button>
-            <button class="button-saude">Alimentação</button>
-        </div>
-    </section>
+    <div class="button-group">
+        <a href="#" class="record-btn">Registrar Agora</a>
+        <a href="#" class="record-btn">Ver Registros</a>
+    </div>
+</section>
 
-    <section class="registro">
-        <div class="registro-texto">
-            <h1>Registro Diário</h1>
-            <h2>Informações necessárias para o acompanhamento</h2>
-        </div>
-        <div class="botoes-registro">
-            <button class="button-registro">Registrar Agora</button>
-            <button class="button-registro">Ver Registros</button>
-        </div>
-    </section>
+<section id="articles" class="articles-section">
+    <div class="container">
+        <div class="articles-grid">
 
-    <section class="informacoes">
-        <div class="card" style="background-color: #CDD9B2;">
-            <a th:href="@{https://www.clinicaceu.com.br/blog/gravidez-saudavel-dicas-imperdiveis-futuras-mamaes/}">
-                <img th:src="@{/HomeGravidez/img/home_img/mulher grávida.png}" alt="Mãe grávida" />
+            <article class="article-card">
+                <img th:src="@{/homeG/img/habitos.svg}" alt="Hábitos Saudáveis" class="card-icon icon-1">
                 <p>Hábitos que auxiliam mães a se adaptarem a uma nova rotina</p>
-            </a>
-        </div>
+            </article>
 
-        <div class="card" style="background-color: #E3C3D8;">
-            <a th:href="@{https://www.gazetadopovo.com.br/conteudo-publicitario/veg-e-lev/alimentacao-saudavel-gravidez/}">
-                <img th:src="@{/HomeGravidez/img/home_img/alimentos.png}" alt="Alimentos" />
+            <article class="article-card">
+                <img th:src="@{/homeG/img/alimentacao.svg}" alt="Alimentação" class="card-icon icon-2">
                 <p>Alimentos essenciais para o desenvolvimento saudável do feto</p>
-            </a>
-        </div>
+            </article>
 
-        <div class="card" style="background-color: #FEDBA5;">
-            <a th:href="@{https://www.scielo.br/j/rbgo/a/6kMvyttht3c5Z334j68N7jQ#:~:text=Nesse%20per%C3%ADodo%2C%20atividades%20aer%C3%B3bicas%20na,na%20prepara%C3%A7%C3%A3o%20para%20o%20parto.}">
-                <img th:src="@{/HomeGravidez/img/home_img/mulher se exercitando.png}" alt="Exercícios" />
+            <article class="article-card">
+                <img th:src="@{/homeG/img/exercicios.svg}" alt="Exercícios" class="card-icon icon-2">
                 <p>Exercícios permitidos durante o período de gestação</p>
-            </a>
-        </div>
+            </article>
 
-        <div class="card" style="background-color: #FFC29E;">
-            <a th:href="@{https://institutonascer.com.br/psicologo-para-gestantes/#:~:text=Redu%C3%A7%C3%A3o%20da%20ansiedade%20e%20estresse,forma%20mais%20profunda%20e%20consciente.}">
-                <img th:src="@{/HomeGravidez/img/home_img/saúde mental.png}" alt="Saúde Mental" />
+            <article class="article-card">
+                <img th:src="@{/homeG/img/cerebro.svg}" alt="Saúde Mental" class="card-icon icon-4">
                 <p>Saúde Mental: como a terapia pode ajudar nesse momento?</p>
-            </a>
-        </div>
-    </section>
-</main>
 
-<footer class="footer">
-    <div class="footer-content">
-        <div class="logo">
-            <img th:src="@{/HomeGravidez/img/navbar/Logo_dalia.png}" alt="Logo" />
+            </article>
         </div>
-        <div class="language-selector">
-            <img th:src="@{/HomeGravidez/img/home_img/bandeira.png}" alt="Bandeira do Brasil" />
-            <span>Português do Brasil</span>
-        </div>
-        <div class="social-media">
-            <a href="#" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
-            <a href="#" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
-            <a href="#" aria-label="Youtube"><i class="fa fa-youtube"></i></a>
-        </div>
-        <div class="footer-sections">
-            <div class="section">
-                <h4>Empresas</h4>
-                <a href="#">Sobre</a><br />
-                <a href="#">Marca</a>
+    </div>
+</section>
+<footer id="footer" class="site-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <img th:src="@{/homeG/img/dalialogo.png}" alt="Dália logo" class="footer-logo">
+
+            <div class="language-selector">
+                <img th:src="@{/homeG/img/brasil.svg}" alt="Brasil">
+                <span>Português do Brasil</span>
+                <img th:src="@{/homeG/img/dropdown.svg}" alt="Dropdown">
             </div>
-            <div class="section">
-                <h4>Recursos</h4>
-                <a href="#">Suporte</a><br />
-                <a href="#">Segurança</a><br />
-                <a href="#">Blog</a><br />
-                <a href="#">Comunidade</a>
+
+            <div class="social-links">
+                <a href="#" aria-label="Instagram"><img th:src="@{/homeG/img/instagram.svg}" alt="Instagram"></a>
+                <a href="#" aria-label="Facebook"><img th:src="@{/homeG/img/facebook.svg}" alt="Facebook"></a>
+                <a href="#" aria-label="Youtube"><img th:src="@{/homeG/img/youtube.svg}" alt="Youtube"></a>
             </div>
-            <div class="section">
-                <h4>Políticas</h4>
-                <a href="#">Termos</a><br />
-                <a href="#">Privacidade</a><br />
-                <a href="#">Cookies</a><br />
-                <a href="#">Moderação</a>
+        </div>
+
+        <div class="footer-nav">
+
+            <div class="link-column">
+                <h3>Empresa</h3>
+                <ul>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Marca</a></li>
+                </ul>
+            </div>
+
+            <div class="link-column">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="#">Suporte</a></li>
+                    <li><a href="#">Segurança</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Comunidade</a></li>
+                </ul>
+            </div>
+
+            <div class="link-column">
+                <h3>Política</h3>
+                <ul>
+                    <li><a href="#">Termos</a></li>
+                    <li><a href="#">Privacidade</a></li>
+                    <li><a href="#">Cookies</a></li>
+                    <li><a href="#">Moderação</a></li>
+                </ul>
             </div>
         </div>
     </div>
 </footer>
-
-<div vw-plugin-wrapper>
-    <div vw-access-button></div>
-    <div vw-plugin-top-wrapper></div>
-</div>
-
-<script th:src="@{https://vlibras.gov.br/app/vlibras-plugin.js}"></script>
-<script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-</script>
-
-<script th:src="@{script.js}"></script>
-
-<script
-        th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"
-></script>
-
-<script
-        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js}"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"
-></script>
-
-<script
-        th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js}"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"
-></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const menuToggle = document.createElement('div');
-        menuToggle.className = 'menu-toggle';
-        menuToggle.innerHTML = '☰';
-
-        const dropdownMenu = document.createElement('div');
-        dropdownMenu.className = 'dropdown-menu';
-
-        const navClone = document.querySelector('nav ul').cloneNode(true);
-        dropdownMenu.appendChild(navClone);
-
-        const header = document.querySelector('header');
-        header.appendChild(menuToggle);
-        header.appendChild(dropdownMenu);
-
-        menuToggle.addEventListener('click', function (e) {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-        });
-
-        document.addEventListener('click', function () {
-            dropdownMenu.classList.remove('show');
-        });
-
-        dropdownMenu.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-    });
-</script>
-
 </body>
 </html>

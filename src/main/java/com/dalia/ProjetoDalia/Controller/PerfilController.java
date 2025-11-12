@@ -49,7 +49,7 @@ public class PerfilController {
             if (user.getSearch() == null) user.setSearch(new Search());
             UsersDTO dto = new UsersDTO(user);
             model.addAttribute("userDTO", dto);
-            return "perfil";
+            return "perfilerrocalendar";
         } else {
             return "redirect:/login";
         }

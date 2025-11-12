@@ -13,28 +13,11 @@
         <img src="/Home/img/navbar/Logo_dalia.png" alt="Logo">
     </div>
     <nav>
-        <ul>
-            <li class="Home">
-                <a href="/home"><img src="/Home/img/navbar/Home__nav.svg" alt="Início"></a>
-                <span class="legenda">HomePage</span>
-            </li>
-            <li class="Calendario">
-                <a href="/calendar"><img src="/Home/img/navbar/Calendar__nav.svg" alt="Calendário"></a>
-                <span class="legenda">Calendário</span>
-            </li>
-            <li class="forum">
-                <a href="/posts"><img src="/Home/img/navbar/Fórum-full__nav.svg" alt="Comunidade"></a>
-                <span class="legenda">Fórum</span>
-            </li>
-            <li class="principal">
-                <a href="../Emocoes/emocoes.html"><img src="/Home/img/navbar/Flower__nav.svg" alt="Emoções"></a>
-                <span class="legenda">Emoções</span>
-            </li>
-            <li class="perfil">
-                <a href="/perfil"><img src="/Home/img/navbar/Perfil__nav.svg" alt="Perfil"></a>
-                <span class="legenda">Perfil</span>
-            </li>
-        </ul>
+        <a href="/home"><img th:src="@{/homeM(parte1)/img/home.svg}" alt="Home"></a>
+        <a href="/calendar"><img th:src="@{/homeM(parte1)/img/calendario.svg}" alt="Calendário"></a>
+        <a href="/Emocoes/emocoes.html"><img th:src="@{/homeM(parte1)/img/registro.svg}" alt="Registro Diário"></a>
+        <a href="/posts"><img th:src="@{/homeM(parte1)/img/chat.svg}" alt="Forum"></a>
+        <a href="/perfil"><img th:src="@{/homeM(parte1)/img/perfil.svg}" alt="Perfil"></a>
     </nav>
 </header>
 

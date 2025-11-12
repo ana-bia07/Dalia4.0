@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/perfil(modoG)/perfilG.css}">
+</head>
+
+<body>
+<header class="site-header">
+    <div class="header-container">
+        <nav class="main-nav">
+            <a href="#"><img th:src="@{/perfil(modoG)/img/home.svg}" alt="Home"></a>
+            <a href="#"><img th:src="@{/perfil(modoG)/img/calendario.svg}" alt="Calendário"></a>
+            <a href="#"><img th:src="@{/perfil(modoG)/img/registro.svg}" alt="Registro Diário"></a>
+            <a href="#"><img th:src="@{/perfil(modoG)/img/chat.svg}" alt="Chat"></a>
+            <a href="#"><img th:src="@{/perfil(modoG)/img/perfil.svg}" alt="Perfil"></a>
+        </nav>
+    </div>
+</header>
+
+<section id="profile-area" class="profile-area-section">
+    <div class="profile-container">
+        <div class="user-settings-column">
+            <h1 class="settings-title">Área do usuário</h1>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-text">Modo Noturno</span>
+                    <div class="toggle-switch">
+                        <div class="toggle-track"></div>
+                        <div class="toggle-handle"></div>
+                    </div>
+                </div>
+
+                <a href="#" class="setting-item">
+                    <span class="setting-text">Informações Pessoais</span>
+                    <img th:src="@{/perfil(modoG)/img/infoP.svg}" alt="" class="setting-icon">
+                </a>
+
+                <a href="#" class="setting-item">
+                    <span class="setting-text">Configurações</span>
+                    <img th:src="@{/perfil(modoG)/img/config.svg}" alt="" class="setting-icon">
+                </a>
+
+                <a href="#" class="setting-item setting-item-highlight setting-item-centered">
+                    <span class="setting-text">Mudar para modo gravidez</span>
+                </a>
+
+                <a href="#" class="setting-item setting-item-highlight">
+                    <span class="setting-text">Ajuda</span>
+                    <img th:src="@{/perfil(modoG)/img/denuncia.svg}" alt="" class="setting-icon">
+                </a>
+            </div>
+            <p class="help-text">Clique acima para pedir ajuda.</p>
+        </div>
+    </div>
+        <div class="profile-details-column">
+            <h2 class="profile-title">Perfil</h2>
+            <img th:src="@{/perfil(modoG)/img/pfp.svg}" alt="Foto de Perfil" class="profile-avatar">
+            
+            <div class="form-group">
+                <label class="form-label">Faixa Etária</label>
+                <div class="form-input-display age-range-display">
+                    <span>18</span>
+                    <span>-</span>
+                    <span>30</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <div class="form-input-display email-field">
+                    <span>user123@gmail.com</span>
+                </div>
+            </div>
+
+            <button type="button" class="verify-button">Verificar informações</button>
+        </div>
+</section>
+</body>
+</html>
