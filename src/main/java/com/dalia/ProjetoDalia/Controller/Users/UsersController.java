@@ -30,7 +30,7 @@ public class UsersController {
 
     @GetMapping("/")
     public String redirectToLandingPage() {
-        return "redirect:/LandingPage/LandingPage.html";
+        return "landingP";
     }
 
     @GetMapping("/cadastro")
@@ -107,6 +107,6 @@ public class UsersController {
         searchService.saveOrUpdateSearchForUser(idUser, search);
         session.setAttribute("search", search.toEntity());
 
-        return "redirect:/home";
+        return "redirect:/Mhome";
     }
 }

@@ -23,7 +23,7 @@ public class GravidezController {
     private final UsersServices usersServices;
     private final UsersRepository usersRepository;
 
-    @GetMapping("/Gravidez/pesquisa")
+    @GetMapping("/gravidez/pesquisa")
     public String mostrarPesquisa(Model model, HttpSession session) {
         String idUser = (String) session.getAttribute("idUser");
 
@@ -35,7 +35,7 @@ public class GravidezController {
         return "/pesquisagravidez";
     }
 
-    @PostMapping("/salvar-pesquisa")
+    @PostMapping("/Ghome")
     public String salvarPesquisa(@ModelAttribute("pregnancyMonitoring") PregnancyMonitoring pregnancyMonitoring, @RequestParam String idUser){
         System.out.println("ID RECEBIDO:" + idUser);
         Optional<Users> userOpt = usersRepository.findById(idUser);
@@ -52,6 +52,6 @@ public class GravidezController {
             );
             usersServices.updateUser(idUser, dto);
         }
-        return "redirect:/Gravidez/homeGravidez";
+        return "homeG";
     }
 }

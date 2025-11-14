@@ -25,18 +25,26 @@ public class HomeController {
     private final SearchService searchService;
     private final UsersServices userService;
 
-    @GetMapping("/home")
+    @GetMapping("/Mhome")
     public String homePage(Model model, @Nullable Principal principal) {
         if (principal == null) {
             model.addAttribute("userId", "visitante");
-            return "index";
+            return "homeM1";
         }
+
 
         UsersDTO usuario = userService.getByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         model.addAttribute("userId", usuario.id());
-        return "index";
+        return "homeM1";
     }
+
+    @GetMapping("/saibaMais")
+    public String redirectToLandingPage() {
+        return "homeM2";
+    }
+
+
 
     @ResponseBody
     @GetMapping("/api/ciclo5dias-home/{idUser}")

@@ -4,14 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	const sections = document.querySelectorAll(".section");
-	let current = [...sections].findIndex(sec => sec.classList.contains("active"));
+	let current = [...sections].findhomeM1(sec => sec.classList.contains("active"));
 
-	function showSection(index) {
+	function showSection(homeM1) {
 		sections.forEach((sec, i) => {
 			sec.classList.remove("active");
 		});
-		sections[index].classList.add("active");
-		current = index; // Atualiza a seção atual corretamente
+		sections[homeM1].classList.add("active");
+		current = homeM1;
 	}
 
 	document.querySelectorAll(".proximo").forEach(btn => {
