@@ -9,9 +9,6 @@ import com.dalia.ProjetoDalia.Services.Users.UsersServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Tag(name = "Usuários")
-@RestController
+@Controller
 public class UsersController {
 
     private final UsersServices usersService;
@@ -31,25 +28,35 @@ public class UsersController {
 
     }
 
-    /*
+    @GetMapping("/")
+    public String redirectToLandingPage() {
+        return "landingP";
+    }
+
     @GetMapping("/cadastro")
     public String cadastro(Model model) {
         model.addAttribute("users", new UsersDTO(null, null, null, null, null, null, null));
         return "cadastro";
-    }*/
+    }
 
-    //passaconfirmation é pela URL
+
     @PostMapping("/criarUsuario")
-    public ResponseEntity<?> createUserForm(@Valid @RequestBody UsersDTO user, @RequestParam String passconfirmation){
+    @Operation(summary = "Cria um usuário", description = "Rota para criar um usuário via formulário HTML")
+    public String createUserForm(@ModelAttribute("users") UsersDTO user, @RequestParam(required = false) String passconfirmation, HttpSession session ,Model model) {
         if (!user.password().equals(passconfirmation)) {
-            return ResponseEntity.badRequest().body("As senhas não coincidem.");
+            model.addAttribute("error", "As senhas não coincidem.");
+            return "cadastro";
         }
+
         try {
             UsersDTO newUser = usersService.createUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+
+            session.setAttribute("idUser",newUser.toEntity().getId());
+            return "redirect:/search";
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            model.addAttribute("error", e.getMessage());
+            return "cadastro";
         }
     }
 
